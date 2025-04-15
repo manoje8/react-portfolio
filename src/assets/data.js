@@ -84,7 +84,7 @@ export const projects = {
 export const experience = [
     {
       title: "Connect Prodigy Consulting Company",
-      duration: "April 2023 - February 2024",
+      duration: "2023 - 2024",
       subtitle: "Software Engineer Trainee",
       details: [
         `ETL Migration from OnPrem solution to Cloud Based solution with Automated XMl to JSON
@@ -97,6 +97,21 @@ export const experience = [
         "Java",
         "Spring",
         "JUnit",
+      ],
+      icon: "heartbeat",
+    },
+    {
+      title: "Knexta Technologies",
+      duration: "2025 - present",
+      subtitle: "Software Developer",
+      details: [
+        `RippleThrive is a SaaS-based Accounts Receivables solution to automate and streamline your accounts receivables process`,
+        `Automate your repetitive low-value add activities & focus on strategic high value add activities with cash flow improvement.`,
+      ],
+      tags: [
+        "React JS",
+        "Node JS",
+        "Postgres",
       ],
       icon: "heartbeat",
     },
