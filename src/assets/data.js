@@ -9,27 +9,29 @@ export const bio = [
     "Organized and dependable candidate successful at managing multiple priorities with a positive attitude.",
     "I am a quick learner and ready to learn and implement required technologies",
   ];
-  
-  export const skills = [
-    {
-      title: "Languages",
-      skillName: "Java, C/C++, JavaScript, SQL, NOSQL, HTML/CSS",
-      color: "bg-success",
-      percentage: "70",
-    },
-    {
-      title: "Frameworks/Libraries",
-      skillName: "Bootstrap, React JS, Node JS, Redux, Spring",
-      color: "bg-info",
-      percentage: "70",
-    },
-    {
-      title: "Tools",
-      skillName: "Git, Chrome DevTools, Linux, JWT",
-      color: "bg-dark",
-      percentage: "80",
-    },
-]
+
+export const skills = [
+  { skillName: "React.js", percentage: 90, icon: "reactjs", group: "frontend" },
+  { skillName: "Redux", percentage: 85, icon: "redux", group: "frontend" },
+  { skillName: "JavaScript", percentage: 92, icon: "javascript", group: "frontend" },
+  { skillName: "HTML", percentage: 95, icon: "html", group: "frontend" },
+  { skillName: "CSS", percentage: 90, icon: "css", group: "frontend" },
+  { skillName: "Bootstrap", percentage: 90, icon: "bootstrap", group: "styling" },
+  { skillName: "TailwindCSS", percentage: 88, icon: "tailwindcss", group: "styling" },
+  { skillName: "GSAP", percentage: 70, icon: "gsap", group: "styling" },
+  { skillName: "Node.js", percentage: 85, icon: "nodejs", group: "backend" },
+  { skillName: "Spring Boot", percentage: 75, icon: "springboot", group: "backend" },
+  { skillName: "FastAPI", percentage: 80, icon: "fastapi", group: "backend" },
+  { skillName: "MongoDB", percentage: 80, icon: "mongodb", group: "database" },
+  { skillName: "PostgreSQL", percentage: 78, icon: "postgresql", group: "database" },
+  { skillName: "MySQL", percentage: 82, icon: "mysql", group: "database" },
+  { skillName: "Git", percentage: 90, icon: "git", group: "tools" },
+  { skillName: "Linux", percentage: 75, icon: "linux", group: "tools" },
+  { skillName: "Chrome DevTools", percentage: 85, icon: "chromedevtools", group: "tools" },
+  { skillName: "AWS", percentage: 70, icon: "awsdeployment", group: "cloud" },
+  { skillName: "Google Cloud", percentage: 65, icon: "googlecloud", group: "cloud" },
+];
+
 
 export const projects = {
     webProjects: [
@@ -134,3 +136,37 @@ export const education = [
       icon: "book",
     },
   ];
+
+
+const ICONS = {
+  java: 'devicon:java',
+  javascript: 'devicon:javascript-plain',
+  python: 'devicon:python-plain',
+  c: '',
+  cplusplus: '',
+  sql: '',
+  nosql: '',
+  html: '',
+  css: '',
+  jquery: '',
+  reactjs: '',
+  redux: '',
+  nodejs: '',
+  tailwindcss: '',
+  gsap: '',
+  git: '',
+  chromedevtools: '',
+  linux: '',
+  fastapi: '',
+  springboot: '',
+  redis: '',
+  googlecloud: '',
+  awsdeployment: '',
+  postgresql: '',
+  mysql: '',
+  mongodb: '',
+  restapi: '',
+  graphql: '',
+  socket: '',
+  nginx: '',
+}

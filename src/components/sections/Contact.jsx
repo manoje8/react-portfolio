@@ -1,6 +1,21 @@
-const Contact = () => {
+import {useGSAP} from "@gsap/react";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import {useRef} from "react";
+
+const Contact = ({setTitle}) => {
+    const contactRef = useRef(null)
+
+
+    useGSAP(() => {
+        ScrollTrigger.create({
+            trigger: contactRef.current,
+            start: "top top",
+            onToggle: (toggle) => setTitle(toggle ? "Contact" : ""),
+        })
+    },[])
+
     return (
-        <div className="contact" id="contact">
+        <div ref={contactRef} className="contact" id="contact">
             <div className="subtitle">
                 <h1>Contact</h1>
             </div>
