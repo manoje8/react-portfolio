@@ -32,3 +32,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bgr {
+    background-color: var(--color-surface-black);
+    color: var(--color-surface-white);
+
+}
+
+.cbr {
+    color: var(--color-surface-white);
+}

@@ -79,7 +79,7 @@ const Education = ({setTitle}) => {
             <div className="flex flex-col md:flex-row gap-10 items-stretch">
 
                 {/* Education Card */}
-                <div className="education-card flex-1 bg-white text-black rounded-2xl shadow-lg p-6">
+                <div className="education-card flex-1 text-white rounded-2xl  p-6">
                     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
                         <Icon icon="mdi:school" className="text-green-400 text-3xl" />
                         Academic Journey
@@ -115,7 +115,7 @@ const Education = ({setTitle}) => {
                 </div>
 
                 {/* Certificate Card */}
-                <div className="certificate-card flex-1 bg-white text-black backdrop-blur-md rounded-2xl shadow-lg p-6">
+                <div className="certificate-card flex-1 text-white rounded-2xl p-6">
                     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
                         <Icon icon="mdi:certificate" className="text-yellow-400 text-3xl" />
                         Certificates

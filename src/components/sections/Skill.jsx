@@ -79,14 +79,14 @@ const Skill = ({setTitle}) => {
                         key={group}
                         className="skill-card p-6 rounded-2xl transition-all"
                     >
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 cbr">
                             {groupSkills[group].map((skill, idx) => (
                                 <div
                                     key={idx}
-                                    className="skill-body flex flex-col items-center justify-center w-20 h-20 bg-gray-100  rounded-xl cursor-pointer"
+                                    className="skill-body flex flex-col items-center justify-center w-20 h-20  rounded-xl cursor-pointer"
                                 >
                                     <Icon icon={skill.icon} className="text-3xl" />
-                                    <span className="text-sm mt-2 text-gray-700 dark:text-gray-300 text-center">
+                                    <span className="text-sm mt-2 text-center">
                                         {skill.skillName}
                                       </span>
                                 </div>

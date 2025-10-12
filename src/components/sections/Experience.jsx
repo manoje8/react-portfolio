@@ -1,24 +1,21 @@
-import { experience } from "../../assets/data"
-import {useRef} from "react";
-import {useGSAP} from "@gsap/react";
+import { experience } from "../../assets/data";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText)
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const Experience = ({setTitle}) => {
-
-    const experienceRef = useRef(null)
+const Experience = ({ setTitle }) => {
+    const experienceRef = useRef(null);
 
     useGSAP(() => {
-
         ScrollTrigger.create({
             trigger: experienceRef.current,
             start: "top top",
             onToggle: (toggle) => setTitle(toggle ? "Experience" : ""),
-        })
-
+        });
 
         const expContainer = document.querySelectorAll(".exp-container");
 
@@ -39,18 +36,18 @@ const Experience = ({setTitle}) => {
                     trigger: section,
                     pin: true,
                     start: "top top",
-                    end: () => `+=${(items.length - 1)  * 100}%`,
+                    end: () => `+=${(items.length - 1) * 100}%`,
                     scrub: 1,
                     invalidateOnRefresh: true,
                 },
-                defaults: {ease: "none"},
+                defaults: { ease: "none" },
             });
 
             items.forEach((item, index) => {
                 if (index < items.length - 1) {
                     timeline.to(item, {
                         scale: 0.9,
-                        borderRadius: "10px",
+                        borderRadius: "12px",
                     });
                     timeline.to(
                         items[index + 1],
@@ -59,47 +56,75 @@ const Experience = ({setTitle}) => {
                     );
                 }
             });
-        })
-
-    },[])
+        });
+    }, []);
 
     return (
-        <div ref={experienceRef} className="exp-wrapper experience h-full p-5" id="experience">
+        <section
+            ref={experienceRef}
+            id="experience"
+            className="exp-wrapper  text-white py-16 px-4 sm:px-8 md:px-12 lg:px-20"
+        >
+            <div className="exp-container w-full h-screen flex flex-col justify-center items-center">
+                {/* Section Header */}
+                <header className="w-full mb-8 text-center sm:text-left">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+                        Experience
+                    </h1>
+                    <p className="text-white mt-2 text-sm sm:text-base">
+                        A journey through my professional roles and achievements.
+                    </p>
+                </header>
 
-            <div className='exp-container max-w-full h-screen gap-5'>
-                <div className="subtitle p-5">
-                    <h1>Experience</h1>
-                </div>
-                <div className="exp-inner-container h-screen min-h-screen relative overflow-hidden">
-                    <div className="exp-list w-full h-3/4 flex items-center justify-center relative">
-                    {
-                        experience?.map((data, id) => (
-                            <article className="exp-list-item absolute top-0 left-50 w-full h-full flex items-center justify-center text-secondary" key={id}>
-                                <div className="experience-label bg-white min-h-100 rounded-xl p-6 shadow-lg w-3/4">
-                                    <h2>{data.title}<span>{data.duration}</span></h2>
-                                    <span className="role">{data.subtitle}</span>
-                                    {
-                                        data.details.map((details, id) => (
-                                            <p key={id} className="label-content">▪ {details}</p>
-                                        ))
-                                    }
-                                    <div>
-                                        {
-                                            data.tags?.map((skill, id) => (
-                                                <span key={id} className="badge badge-secondary">{skill}</span>
-                                            ))
-                                        }
-                                    </div>
+                {/* Experience Items */}
+                <div className="exp-inner-container relative w-full h-full overflow-hidden">
+                    <div className="exp-list w-full h-full flex items-center justify-center relative">
+                        {experience?.map((data, id) => (
+                            <article
+                                key={id}
+                                className="exp-list-item absolute top-0 left-0 w-full h-full flex items-center justify-center"
+                            >
+                                <div className="experience-label bgr backdrop-blur-md shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 w-[90%] sm:w-4/5 md:w-3/5 transition-all duration-500">
+                                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between">
+                                        {data.title}
+                                        <span className="text-sm sm:text-base cbr mt-1 sm:mt-0">
+                                          {data.duration}
+                                        </span>
+                                    </h2>
+
+                                    <span className="block cbr font-medium mt-2 text-sm sm:text-base">
+                                    {data.subtitle}
+                                  </span>
+
+                                    <ul className="mt-4 space-y-2 text-[11px] sm:text-base cbr leading-relaxed">
+                                        {data.details.map((details, idx) => (
+                                            <li key={idx} className="flex items-start gap-2">
+                                                <span className="text-primary font-bold">•</span>
+                                                {details}
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {data.tags && (
+                                        <div className="flex flex-wrap gap-2 mt-6">
+                                            {data.tags.map((skill, idx) => (
+                                                <span
+                                                    key={idx}
+                                                    className="px-3 py-1 text-xs sm:text-sm bg-gray-100 text-gray-800 rounded-full border border-gray-200 hover:bg-gray-200 transition"
+                                                >
+                          {skill}
+                        </span>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </article>
-                        ))
-                    }
+                        ))}
                     </div>
                 </div>
-
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
-export default Experience
+export default Experience;

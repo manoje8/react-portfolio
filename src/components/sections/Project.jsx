@@ -61,54 +61,71 @@ const Project = ({setTitle}) => {
     return (
         <div
             ref={containerRef}
-            className="project-section w-full overflow-hidden"
+            className="project-section w-full overflow-hidden cbr py-10 md:py-20"
             style={{ height: "100vh" }}
         >
-            <div className="p-3">
-                <h1 className="project-header text-4xl font-bold">Projects</h1>
+
+            <div className="px-6 md:px-12 lg:px-20 mb-10">
+                <h1 className="project-header text-left md:text-right text-3xl sm:text-4xl md:text-5xl font-bold  tracking-tight">
+                    Projects
+                </h1>
+                <p className="mt-3 text-sm sm:text-base">
+                    A selection of my recent work — blending creativity and engineering.
+                </p>
             </div>
 
             <div
                 ref={carouselRef}
-                className="projects-carousel flex "
+                className="projects-carousel flex w-max"
                 style={{ height: "calc(100vh - 200px)" }}
             >
                 {projects.webProjects.map((project, id) => (
                     <div
                         key={id}
-                        className="panel px-4"
+                        className="panel flex-shrink-0 w-screen px-6 md:px-10 lg:px-16 flex justify-center"
                     >
-                        <div className="bg-white rounded-xl shadow-lg w-full max-w-6xl h-3/4 p-6 flex md:flex-row gap-5">
-                            <a target="_blank" href={project.preview} rel="noreferrer" className="w-1/2">
+                        <div className="bgr rounded-2xl shadow-xl w-full max-w-6xl h-[70vh] md:h-[75vh] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 transition-transform duration-300 hover:scale-[1.01]">
+                            <a
+                                href={project.preview}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="w-full md:w-1/2 flex justify-center"
+                            >
                                 <img
-                                    className="rounded-lg w-full h-full object-contain"
+                                    className="rounded-xl w-full h-[250px] sm:h-[300px] md:h-full object-contain"
                                     src={project.image}
-                                    alt={project.name}
+                                    alt={project.projectName}
                                 />
                             </a>
 
-                            <div className="flex flex-col justify-between w-1/2 py-4">
+                            <div className="flex flex-col justify-between w-full md:w-1/2 text-center md:text-left">
                                 <div>
-                                    <h3 className="text-2xl font-bold mb-4">{project.name}</h3>
-                                    <p className="text-gray-700 text-lg mb-6 leading-relaxed">{project.summary}</p>
-                                    <div className="flex flex-wrap gap-2 mb-6">
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
+                                        {project.projectName}
+                                    </h3>
+                                    <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-6">
+                                        {project.summary}
+                                    </p>
+
+                                    <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
                                         {project.techStack.map((tech, idx) => (
                                             <span
                                                 key={idx}
-                                                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
+                                                className="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
                                             >
                                                 {tech}
                                             </span>
                                         ))}
                                     </div>
                                 </div>
+
                                 <a
                                     href={project.github}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="inline-block text-blue-600 hover:underline font-semibold text-lg"
+                                    className="text-blue-600 hover:text-blue-800 font-semibold text-sm sm:text-base mt-2"
                                 >
-                                    Source code →
+                                    View Source Code →
                                 </a>
                             </div>
                         </div>
