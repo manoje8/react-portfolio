@@ -65,7 +65,7 @@ const Skill = ({setTitle}) => {
     }, []);
 
     return (
-        <div ref={sectionRef} id="skill" className="py-16 px-6 lg:px-20">
+        <div ref={sectionRef} id="skills" className="py-16 px-6 lg:px-20">
             <div className="text-center text-white mb-12">
                 <h1 className="text-4xl font-bold text-right">Skills</h1>
                 <p className="mt-2">

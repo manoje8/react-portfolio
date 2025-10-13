@@ -110,25 +110,37 @@ const About = ({title, setTitle}) => {
             </div>
             <header className="topbar fixed top-3 left-5">
                 <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
-                    <div className='bg-black py-2 px-[12px] text-white text-md md:text-xl rounded-lg cursor-pointer'>m</div>
+                    <button onClick={() => (window.location.href = "/")} className='bg-black py-2 px-[12px] text-white text-md md:text-xl rounded-lg cursor-pointer'>m</button>
                     <div className="flex item-center justify-center gap-1 text-md">
                         {
                             header.map((item, idx) => (
-                                <div className={`text-center p-1`} key={idx}>{item}</div>
+                                <a href={`#${item.toLowerCase()}`} className={`text-center p-1`} key={idx}>{item}</a>
                             ))
                         }
                     </div>
                 </div>
             </header>
-            <div className='text-sm md:text-2xl text-wrap md:w-3/4'>
-                <div>
-                    <span className="md:text-[82px] mano">MANO DEEPAN</span>
-                    <p className='mano-about'>Hello! I'm hardworking and passionate job seeker with strong JavaScript,
-                        Java, and ReactJS, skills and eager to secure an entry-level Software Developer position</p>
-                    <p className='mano-about'>Organized and dependable candidate successful at managing multiple priorities with a positive attitude.</p>
-                    <p className='mano-about'>I am a quick learner and ready to learn and implement required technologies</p>
+            <div className="w-full flex justify-center px-4 sm:px-6 md:px-10 py-6">
+                <div className="text-center sm:text-left text-sm md:text-lg lg:text-xl max-w-3xl leading-relaxed">
+                    <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
+                      MANO DEEPAN
+                    </span>
+
+                    <p className="mano-about mb-3">
+                        Hello! I'm a hardworking and passionate job seeker with strong JavaScript,
+                        Java, and ReactJS skills, eager to secure an entry-level Software Developer position.
+                    </p>
+
+                    <p className="mano-about mb-3">
+                        Organized and dependable candidate, successful at managing multiple priorities with a positive attitude.
+                    </p>
+
+                    <p className="mano-about">
+                        I am a quick learner and ready to learn and implement required technologies.
+                    </p>
                 </div>
             </div>
+
         </div>
     )
 }

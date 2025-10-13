@@ -11,13 +11,13 @@ const Loader = ({setIsLoading}) => {
         const header = SplitText.create(".loader-header", {
             type:"words,chars",
             mask: "chars",
-            charsClass: "text-xl md:text-[120px] ",
+            charsClass: "text:2xl md:text-[120px] ",
         })
 
         const desc = SplitText.create(".loader-desc", {
             type:"words, chars, lines",
             mask: "words",
-            wordsClass: "text-md md:text-[50px] text-center"
+            wordsClass: "text:md md:text-[50px] text-center"
         })
 
         const tl = gsap.timeline({
@@ -51,12 +51,12 @@ const Loader = ({setIsLoading}) => {
         })
         tl.from(desc.words, {
             filter: "blur(10px)",
-            y: "-50",
+            y: "-80",
             scale: 0.95,
             ease: "power2.inOut",
             duration: 0.5,
             stagger: {
-                each: 0.3,
+                each: 0.125,
                 from: "random"
             },
         })
@@ -68,7 +68,7 @@ const Loader = ({setIsLoading}) => {
         <section className="absolute top-0 left-0 w-full h-full min-h-screen loader bg-gray-800 z-10000 overflow-hidden overscroll-none">
             <div className="flex flex-col justify-center items-center h-full">
                 <h2 className="sm:text-xl md:text-3xl loader-header">Mano Deepan</h2>
-                <h2 className="text-sm md:text-md loader-desc">Lazy Developer trying to achieve the big dream</h2>
+                <h2 className="text-sm md:text-md loader-desc">Passionate developer crafting efficient and scalable applications</h2>
             </div>
         </section>
     )

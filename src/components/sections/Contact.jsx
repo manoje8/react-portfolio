@@ -47,19 +47,19 @@ const Contact = ({ setTitle }) => {
                         <div>
                             <p className="text-sm text-white mb-1">Email</p>
                             <a
-                                href="mailto:xxxxx@gmail.com"
+                                href="mailto:manodeepan2001@gmail.com"
                                 className="text-white hover:text-blue-600 transition-colors text-lg font-medium"
                             >
-                                xxxxx@gmail.com
+                                manodeepan2001@gmail.com
                             </a>
                         </div>
                         <div>
                             <p className="text-sm text-white mb-1">Phone</p>
                             <a
-                                href="tel:+919876543210"
+                                href="tel:+916383059012"
                                 className="text-gray-800 hover:text-green-600 transition-colors text-lg font-medium"
                             >
-                                +91 98765 43210
+                                +91 6383059012
                             </a>
                         </div>
                     </div>

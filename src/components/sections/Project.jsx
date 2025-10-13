@@ -60,13 +60,14 @@ const Project = ({setTitle}) => {
 
     return (
         <div
+            id="projects"
             ref={containerRef}
             className="project-section w-full overflow-hidden cbr py-10 md:py-20"
             style={{ height: "100vh" }}
         >
 
             <div className="px-6 md:px-12 lg:px-20 mb-10">
-                <h1 className="project-header text-left md:text-right text-3xl sm:text-4xl md:text-5xl font-bold  tracking-tight">
+                <h1 className="project-header text-right text-3xl sm:text-4xl md:text-5xl font-bold  tracking-tight">
                     Projects
                 </h1>
                 <p className="mt-3 text-sm sm:text-base">
