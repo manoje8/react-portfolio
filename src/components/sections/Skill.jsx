@@ -1,101 +1,132 @@
 import { useRef } from "react";
-import { Icon } from "@iconify/react";
 import gsap from "gsap";
-import {useGSAP} from "@gsap/react";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { skills } from "../../assets/data";
+import { Icon } from "@iconify/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skills = [
-    { skillName: "React.js", percentage: 90, icon: "logos:react", group: "frontend" },
-    { skillName: "Redux", percentage: 85, icon: "logos:redux", group: "frontend" },
-    { skillName: "JavaScript", percentage: 92, icon: "logos:javascript", group: "frontend" },
-    { skillName: "HTML", percentage: 95, icon: "logos:html-5", group: "frontend" },
-    { skillName: "CSS", percentage: 90, icon: "logos:css-3", group: "styling" },
-    { skillName: "Bootstrap", percentage: 90, icon: "logos:bootstrap", group: "styling" },
-    { skillName: "TailwindCSS", percentage: 88, icon: "logos:tailwindcss-icon", group: "styling" },
-    { skillName: "GSAP", percentage: 70, icon: "logos:gsap", group: "styling" },
-    { skillName: "Node.js", percentage: 85, icon: "logos:nodejs-icon", group: "backend" },
-    { skillName: "Spring Boot", percentage: 75, icon: "logos:spring-icon", group: "backend" },
-    { skillName: "FastAPI", percentage: 80, icon: "logos:fastapi", group: "backend" },
-    { skillName: "MongoDB", percentage: 80, icon: "logos:mongodb", group: "database" },
-    { skillName: "PostgreSQL", percentage: 78, icon: "logos:postgresql", group: "database" },
-    { skillName: "MySQL", percentage: 82, icon: "logos:mysql", group: "database" },
-    { skillName: "Git", percentage: 90, icon: "logos:git-icon", group: "tools" },
-    { skillName: "Linux", percentage: 75, icon: "logos:linux-tux", group: "tools" },
-    { skillName: "Chrome DevTools", percentage: 85, icon: "logos:google-chrome", group: "tools" },
-    { skillName: "AWS", percentage: 70, icon: "logos:aws", group: "cloud" },
-    { skillName: "Google Cloud", percentage: 65, icon: "logos:google-cloud", group: "cloud" },
-];
+// Refined color palette & naming conventions for a professional tone
+const groupMeta = {
+    frontend: { label: "Frontend Architecture", text: "text-indigo-400", bg: "bg-indigo-500/5", icon: "mdi:monitor-dashboard" },
+    styling:  { label: "Design & Motion", text: "text-rose-400", bg: "bg-rose-500/5", icon: "mdi:palette-outline" },
+    backend:  { label: "Backend Engineering", text: "text-emerald-400", bg: "bg-emerald-500/5", icon: "mdi:server-network" },
+    database: { label: "Database Systems", text: "text-amber-400", bg: "bg-amber-500/5", icon: "mdi:database-outline" },
+    tools:    { label: "DevOps & Tools", text: "text-sky-400", bg: "bg-sky-500/5", icon: "mdi:tools" },
+    cloud:    { label: "Cloud Infrastructure", text: "text-blue-400", bg: "bg-blue-500/5", icon: "mdi:cloud-outline" },
+};
 
-// Group skills by category
 const groupSkills = skills.reduce((acc, skill) => {
     acc[skill.group] = acc[skill.group] ? [...acc[skill.group], skill] : [skill];
     return acc;
 }, {});
 
-const Skill = ({setTitle}) => {
+const Skill = ({ setTitle }) => {
     const sectionRef = useRef(null);
 
     useGSAP(() => {
+        // Section Title trigger
         ScrollTrigger.create({
             trigger: sectionRef.current,
-            start: "top top",
+            start: "top 20%",
+            end: "bottom 80%",
             onToggle: (toggle) => setTitle(toggle ? "Skills" : ""),
-        })
-        gsap.to('.skill-card', {
-            y: -20,
-            duration:0.6,
-            ease: "power3.inOut",
-            stagger: 0.15,
-        })
+        });
 
+        // Sophisticated, slower fade-in for rows
         gsap.fromTo(
-            sectionRef.current.querySelectorAll(".skill-body"),
-            { opacity: 0, y: 40, scale: 0.9 },
+            sectionRef.current.querySelectorAll(".skill-card"),
+            { opacity: 0, y: 30 },
             {
                 opacity: 1,
                 y: 0,
-                scale: 1,
-                duration: 0.8,
-                stagger: 0.15,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power4.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                },
+            }
+        );
+
+        // Quick, organic reveal for individual tags
+        gsap.fromTo(
+            sectionRef.current.querySelectorAll(".skill-badge"),
+            { opacity: 0, y: 10 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.02,
                 ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 70%",
+                },
             }
         );
     }, []);
 
     return (
-        <div ref={sectionRef} id="skills" className="py-16 px-6 lg:px-20">
-            <div className="text-center text-white mb-12">
-                <h1 className="text-4xl font-bold text-right">Skills</h1>
-                <p className="mt-2">
-                    Technologies & tools I use in development
+        <section 
+            ref={sectionRef} 
+            id="skills" 
+            className="min-h-screen px-6 md:px-16 lg:px-24 py-28 bg-black text-zinc-100 relative z-10 select-none"
+        >
+            <div className="mb-16 md:mb-24">
+                <p className="text-sm md:text-base text-green-400 mb-2 tracking-widest uppercase">
+                    What I bring to the table
                 </p>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+                    Skills & Expertise
+                </h1>
+                <div className="mt-6 h-1 w-24 bg-gradient-to-r from-green-400 to-blue-500 rounded-full" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {Object.keys(groupSkills).map((group) => (
-                    <div
-                        key={group}
-                        className="skill-card p-6 rounded-2xl transition-all"
-                    >
-                        <div className="flex flex-wrap gap-4 cbr">
-                            {groupSkills[group].map((skill, idx) => (
-                                <div
-                                    key={idx}
-                                    className="skill-body flex flex-col items-center justify-center w-20 h-20  rounded-xl cursor-pointer"
-                                >
-                                    <Icon icon={skill.icon} className="text-3xl" />
-                                    <span className="text-sm mt-2 text-center">
-                                        {skill.skillName}
-                                      </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 border-t border-zinc-900 pt-2">
+                {Object.keys(groupSkills).map((group) => {
+                    const meta = groupMeta[group] ?? { 
+                        label: group, 
+                        text: "text-zinc-400", 
+                        bg: "bg-zinc-500/5", 
+                        icon: "mdi:code-tags" 
+                    };
+                    
+                    return (
+                        <div
+                            key={group}
+                            className=" group/card flex flex-col space-y-6"
+                        >
+                            {/* Card Header: Typographically focused */}
+                            <div className="flex items-center justify-between border-b border-zinc-900">
+                                <h3 className="text-lg font-medium text-zinc-200 tracking-tight transition-colors duration-300 group-hover/card:text-white">
+                                    {meta.label}
+                                </h3>
+                                <div className={`p-2 rounded-lg transition-all duration-500 ${meta.bg} text-zinc-500 group-hover/card:${meta.text}`}>
+                                    <Icon icon={meta.icon} className="text-xl transition-transform duration-500 group-hover/card:rotate-[12deg]" />
                                 </div>
-                            ))}
+                            </div>
+
+                            <div className="flex flex-wrap gap-2 pt-2">
+                                {groupSkills[group].map((skill, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="skill-badge group/badge relative overflow-hidden rounded px-3 py-1.5 bg-zinc-950 border border-zinc-900/80 hover:border-zinc-700/80 transition-all duration-300 cursor-default"
+                                    >
+                                        <span className="relative z-10 text-xs font-mono tracking-wide text-zinc-400 group-hover/badge:text-zinc-100 transition-colors duration-300">
+                                            {skill.skillName}
+                                        </span>
+                                        <div className="absolute inset-0 opacity-0 group-hover/badge:opacity-100 transition-opacity duration-300 bg-gradient-to-tr from-zinc-900 to-zinc-900/40 pointer-events-none" />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
-        </div>
+        </section>
     );
 };
 

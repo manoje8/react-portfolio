@@ -1,109 +1,121 @@
-import { education } from "../../assets/data"
+import { useRef } from "react";
+import { education } from "../../assets/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Icon } from "@iconify/react";
-import {useRef} from "react";
 import SplitText from "gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const Education = ({setTitle}) => {
-    const educationRef = useRef(null)
-    const titleRef = useRef(null)
+const Education = ({ setTitle }) => {
+    const educationRef = useRef(null);
+    const titleRef = useRef(null);
 
     useGSAP(() => {
-
-        SplitText.create(titleRef.current, {
-            type: "chars",
-            mask: "chars",
-            onSplit: (split) => {
-                return gsap.from(split.chars, {
-                    y: 50,
-                    ease: "easeInOut",
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: educationRef.current,
-                        start: "top top",
-                    }
-                })
+        // High-end character reveal for the main heading
+        const split = new SplitText(titleRef.current, { type: "chars" });
+        gsap.from(split.chars, {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.04,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: educationRef.current,
+                start: "top 75%",
             }
-        })
+        });
 
         ScrollTrigger.create({
             trigger: educationRef.current,
-            start: "top top",
+            start: "top 20%",
+            end: "bottom 80%",
             onToggle: (toggle) => setTitle(toggle ? "Education" : ""),
-        })
-        // Timeline for staggered animations
+        });
+
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#education",
-                start: "top 80%", // animation starts when component enters viewport
+                start: "top 75%",
                 toggleActions: "play none none none",
             }
         });
 
-        // Animate education card first
-        tl.from(".education-card", {
-            x: -150,
+        // Replaced jarring side-slides with an elegant vertical fade-up sequence
+        tl.from(".education-column", {
+            y: 40,
             opacity: 0,
             duration: 1.2,
             ease: "power3.out",
-        });
-
-        // Then certificates card
-        tl.from(".certificate-card", {
-            x: 150,
+        })
+        .from(".certificate-column", {
+            y: 40,
             opacity: 0,
             duration: 1.2,
             ease: "power3.out",
-        }, "-=0.6"); // overlap a bit for smooth effect
+        }, "-=0.8");
 
     }, []);
 
     return (
         <section
             ref={educationRef}
-            className="relative min-h-screen text-white py-16 px-6 md:px-12 overflow-hidden"
+            className="relative min-h-screen text-zinc-100 py-15 px-6 md:px-16 lg:px-24 bg-black overflow-hidden select-none"
             id="education"
         >
-            {/* Header */}
-            <div className="text-right mb-12">
-                <h1 ref={titleRef} className="text-4xl md:text-5xl font-bold tracking-tight text-white relative inline-block">
-                    Education
-                </h1>
+            {/* Header Area */}
+            <div className="text-left mb-10 lg:mb-16 border-b border-zinc-900 pb-2 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <div>
+                    <h2 ref={titleRef} className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight">
+                        Academic <span className="text-zinc-500 italic font-serif">Credentials.</span>
+                    </h2>
+                </div>
             </div>
 
-            {/* Content */}
-            <div className="flex flex-col md:flex-row gap-10 items-stretch">
-
-                {/* Education Card */}
-                <div className="education-card flex-1 text-white rounded-2xl  p-6">
-                    <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                        <Icon icon="mdi:school" className="text-green-400 text-3xl" />
-                        Academic Journey
-                    </h2>
-                    <div className="space-y-6">
+            {/* Main Content Layout Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                {/* Academic Journey Column */}
+                <div className="education-column lg:col-span-7 space-y-5">
+                    <div className="flex items-center gap-3 border-b border-zinc-900 pb-4">
+                        <h3 className="text-xl font-medium text-zinc-200 tracking-tight">Institutional Path</h3>
+                    </div>
+                    
+                    <div className="space-y-14 relative before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[1px] before:bg-zinc-900 pl-6 md:pl-8">
                         {education?.map((data, id) => (
                             <article
                                 key={id}
-                                className="bg-gray-900/70 p-5 rounded-xl shadow-md hover:shadow-xl transition-all"
+                                className="group relative space-y-3"
                             >
-                                <h3 className="text-xl font-semibold text-green-400">
-                                    {data.title} <span className="text-sm text-gray-400 ml-2">({data.duration})</span>
-                                </h3>
-                                <p className="text-gray-300 italic mb-3">{data.subtitle}</p>
-                                <ul className="list-disc pl-5 text-gray-400 text-sm space-y-1">
-                                    {data.details.map((details, i) => (
-                                        <li key={i}>{details}</li>
+                                {/* Minimalist Timeline Node */}
+                                <div className="absolute -left-[29px] md:-left-[37px] top-2 w-2 h-2 rounded-full bg-zinc-800 border border-black group-hover:bg-zinc-400 transition-colors duration-300" />
+                                
+                                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                                    <h4 className="text-lg font-medium text-zinc-100 group-hover:text-white transition-colors duration-300">
+                                        {data.title}
+                                    </h4>
+                                    <span className="text-xs font-mono text-zinc-500">
+                                        {data.duration}
+                                    </span>
+                                </div>
+                                
+                                <p className="text-sm text-zinc-400 italic font-serif">{data.subtitle}</p>
+                                
+                                <ul className="space-y-2 text-sm text-zinc-400 pt-2">
+                                    {data.details.map((detail, i) => (
+                                        <li key={i} className="leading-relaxed flex items-start gap-2">
+                                            <span className="text-zinc-600 mt-1.5 select-none text-[10px]">&bull;</span>
+                                            <span>{detail}</span>
+                                        </li>
                                     ))}
                                 </ul>
-                                <div className="mt-3 flex flex-wrap gap-2">
+
+                                <div className="mt-4 flex flex-wrap gap-1.5 pt-2">
                                     {data.tags?.map((skill, i) => (
                                         <span
                                             key={i}
-                                            className="px-3 py-1 text-xs rounded-full bg-green-600/20 border border-green-500/40 text-green-300"
+                                            className="px-2.5 py-1 text-[11px] font-mono rounded bg-zinc-950 border border-zinc-900 text-zinc-400"
                                         >
                                             {skill}
                                         </span>
@@ -114,30 +126,42 @@ const Education = ({setTitle}) => {
                     </div>
                 </div>
 
-                {/* Certificate Card */}
-                <div className="certificate-card flex-1 text-white rounded-2xl p-6">
-                    <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                        <Icon icon="mdi:certificate" className="text-yellow-400 text-3xl" />
-                        Certificates
-                    </h2>
-                    <div className="space-y-4">
-                        <div className="bg-gray-900/70 p-4 rounded-lg flex items-center gap-3 hover:shadow-lg transition-all">
-                            <Icon icon="mdi:react" className="text-sky-400 text-2xl" />
-                            <span>MERN Stack Development</span>
+                {/* Certificates Column */}
+                <div className="certificate-column lg:col-span-5 space-y-12">
+                    <div className="flex items-center gap-3 border-b border-zinc-900 pb-2">
+                        <h3 className="text-xl font-medium text-zinc-200 tracking-tight">Specializations</h3>
+                    </div>
+
+                    <div className="divide-y divide-zinc-900 border-b border-zinc-900">
+                        <div className="group/cert py-4 flex items-center justify-between transition-colors duration-300">
+                            <div className="flex items-center gap-4">
+                                <Icon icon="mdi:react" className="text-zinc-500 group-hover/cert:text-sky-400 transition-colors duration-500 text-xl" />
+                                <span className="text-sm font-medium text-zinc-300 group-hover/cert:text-white transition-colors duration-300">MERN Stack Development</span>
+                            </div>
+                            <span className="text-[10px] font-mono text-zinc-600 tracking-wider uppercase opacity-0 group-hover/cert:opacity-100 transition-all duration-300 translate-x-2 group-hover/cert:translate-x-0">Verified</span>
                         </div>
-                        <div className="bg-gray-900/70 p-4 rounded-lg flex items-center gap-3 hover:shadow-lg transition-all">
-                            <Icon icon="mdi:database" className="text-green-400 text-2xl" />
-                            <span>MongoDB Specialist</span>
+
+                        <div className="group/cert py-4 flex items-center justify-between transition-colors duration-300">
+                            <div className="flex items-center gap-4">
+                                <Icon icon="mdi:database" className="text-zinc-500 group-hover/cert:text-emerald-400 transition-colors duration-500 text-xl" />
+                                <span className="text-sm font-medium text-zinc-300 group-hover/cert:text-white transition-colors duration-300">MongoDB Specialist</span>
+                            </div>
+                            <span className="text-[10px] font-mono text-zinc-600 tracking-wider uppercase opacity-0 group-hover/cert:opacity-100 transition-all duration-300 translate-x-2 group-hover/cert:translate-x-0">Verified</span>
                         </div>
-                        <div className="bg-gray-900/70 p-4 rounded-lg flex items-center gap-3 hover:shadow-lg transition-all">
-                            <Icon icon="mdi:sql-query" className="text-indigo-400 text-2xl" />
-                            <span>SQL & Database Design</span>
+
+                        <div className="group/cert py-4 flex items-center justify-between transition-colors duration-300">
+                            <div className="flex items-center gap-4">
+                                <Icon icon="mdi:sql-query" className="text-zinc-500 group-hover/cert:text-indigo-400 transition-colors duration-500 text-xl" />
+                                <span className="text-sm font-medium text-zinc-300 group-hover/cert:text-white transition-colors duration-300">SQL & Database Design</span>
+                            </div>
+                            <span className="text-[10px] font-mono text-zinc-600 tracking-wider uppercase opacity-0 group-hover/cert:opacity-100 transition-all duration-300 translate-x-2 group-hover/cert:translate-x-0">Verified</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default Education;

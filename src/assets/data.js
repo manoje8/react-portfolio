@@ -36,21 +36,30 @@ export const skills = [
 export const projects = {
     webProjects: [
       {
+        projectName: "Air flight",
+        image: "",
+        summary:
+            "An end-to-end flight telemetry data engineering pipeline built with Apache Airflow, dbt, Snowflake, and Docker. ",
+        preview: "",
+        github: "https://github.com/manoje8/air-flight",
+        techStack: ["Python", "Airflow", "DBT", "Snowflake", "Docker"],
+      },
+      {
+        projectName: "Studious",
+        image: "",
+        summary:
+            "Studious is a learning project that demonstrates how to build a sophisticated, agentic Retrieval-Augmented Generation system from the ground up.",
+        preview: "",
+        github: "https://github.com/manoje8/studious",
+        techStack: ["Python", "FastAPI", "LangGraph", "Google Cloud", "Qdrant", "redis", "postgresql", "logfire"],
+      },
+      {
         projectName: "Shortify",
         image: shortify,
         summary:
           "Shortify is a secure URL shortening service that empowers users to transform lengthy links into memorable, trackable short URLs.",
         preview: "https://eloquent-tanuki-57a622.netlify.app/",
         github: "https://github.com/manoje8/urlshortener-frontend",
-        techStack: ["React JS", "Bootstrap v4.6", "Node js", "MongoDB", "JWT"],
-      },
-      {
-        projectName: "Epub Reader",
-        image: ebook,
-        summary:
-          "An interactive EPUB reader built with the MERN stack. It allows users to upload, store, and read EPUB books.",
-        preview: "https://zingy-alfajores-7f81b0.netlify.app/",
-        github: "https://github.com/manoje8/ebook-reader",
         techStack: ["React JS", "Bootstrap v4.6", "Node js", "MongoDB", "JWT"],
       },
       {
@@ -70,15 +79,6 @@ export const projects = {
         preview: "https://cozy-flan-a08f87.netlify.app/",
         github: "https://github.com/manoje8/CRM-frontend",
         techStack: ["React JS", "Node js", "MongoDB", "JWT"],
-      },
-      {
-        projectName: "Todo Flow",
-        image: todoFlow,
-        summary:
-          "TodoFlow Application built using React and Redux for managing tasks. It allows users to add, update, delete, and search todos.",
-        preview: "https://capable-nougat-e087a9.netlify.app/",
-        github: "https://github.com/manoje8/todo-flow",
-        techStack: ["React JS", "Redux", "Node JS", "MongoDB", "JWT"],
       },
     ]
 }

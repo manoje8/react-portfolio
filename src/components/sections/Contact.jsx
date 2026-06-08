@@ -48,19 +48,18 @@ const Contact = ({ setTitle }) => {
                             <p className="text-sm text-white mb-1">Email</p>
                             <a
                                 href="mailto:manodeepan2001@gmail.com"
-                                className="text-white hover:text-blue-600 transition-colors text-lg font-medium"
+                                className="text-white hover:text-blue-600 transition-colors text-lg"
                             >
                                 manodeepan2001@gmail.com
                             </a>
                         </div>
                         <div>
                             <p className="text-sm text-white mb-1">Phone</p>
-                            <a
-                                href="tel:+916383059012"
-                                className="text-gray-800 hover:text-green-600 transition-colors text-lg font-medium"
+                            <span
+                                className="text-white hover:text-green-600 transition-colors text-md"
                             >
                                 +91 6383059012
-                            </a>
+                            </span>
                         </div>
                     </div>
                     <div className="space-y-4">
@@ -81,10 +80,8 @@ const Contact = ({ setTitle }) => {
 
                 <div className="flex justify-center space-x-8">
                     {[
-                        { icon: "mdi:linkedin", href: "https://linkedin.com/in/yourusername", color: "hover:text-blue-700" },
-                        { icon: "mdi:github", href: "https://github.com/yourusername", color: "hover:text-gray-800" },
-                        { icon: "mdi:twitter", href: "https://twitter.com/yourusername", color: "hover:text-sky-500" },
-                        { icon: "mdi:instagram", href: "https://instagram.com/yourusername", color: "hover:text-pink-600" },
+                        { icon: "mdi:linkedin", href: "https://www.linkedin.com/in/mano-deepan-b-392361208", color: "hover:text-blue-700" },
+                        { icon: "mdi:github", href: "https://github.com/manoje8", color: "hover:text-gray-800" },
                     ].map((social, index) => (
                         <a
                             key={index}
@@ -93,7 +90,7 @@ const Contact = ({ setTitle }) => {
                             rel="noopener noreferrer"
                             className={`shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${social.color}`}
                         >
-                            <Icon icon={social.icon} className="text-2xl" />
+                            <Icon icon={social.icon} height={40} width={40} />
                         </a>
                     ))}
                 </div>

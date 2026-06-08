@@ -1,5 +1,5 @@
 a {
-	color: var(--color-surface-black);
+	color: inherit;
 	-webkit-transition: 0.5s;
 	-o-transition: 0.5s;
 	transition: 0.5s;
@@ -7,7 +7,7 @@ a {
 a:hover,
 a:active,
 a:focus {
-	color: var(--color-maid-dark);
+	color: inherit;
 	outline: none;
 	text-decoration: none !important;
 }

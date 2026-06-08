@@ -32,7 +32,7 @@ const Main = () => {
                     scrollTrigger: {
                         trigger: section,
                         start: "top 80%",
-                        end: "bottom 60%",
+                        end: "bottom 80%",
                         scrub: true,
                     }
                 }

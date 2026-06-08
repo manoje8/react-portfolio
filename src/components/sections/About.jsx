@@ -1,14 +1,14 @@
-import {useRef} from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import {loadSlim} from "tsparticles-slim";
+import { loadSlim } from "tsparticles-slim";
 import Particles from "react-tsparticles";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger)
 
-const About = ({title, setTitle}) => {
+const About = ({ title, setTitle }) => {
     const aboutRef = useRef(null)
     const particleContainerRef = useRef(null)
 
@@ -60,13 +60,13 @@ const About = ({title, setTitle}) => {
         })
 
         const title = SplitText.create(".mano", {
-            type:"words, chars, lines",
+            type: "words, chars, lines",
             mask: "chars",
             wordsClass: ""
         })
 
         const desc = SplitText.create(".mano-about", {
-            type:"words, chars, lines",
+            type: "words, chars, lines",
             mask: "words",
             wordsClass: ""
         })
@@ -97,7 +97,7 @@ const About = ({title, setTitle}) => {
 
 
 
-    },[])
+    }, [])
 
     return (
         <div ref={aboutRef} className="relative min-h-screen flex flex-col justify-center items-center z-100">
@@ -120,23 +120,25 @@ const About = ({title, setTitle}) => {
                     </div>
                 </div>
             </header>
-            <div className="w-full flex justify-center px-4 sm:px-6 md:px-10 py-6">
-                <div className="text-center sm:text-left text-sm md:text-lg lg:text-xl max-w-3xl leading-relaxed">
+            <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6">
+                <div className="text-left sm:text-left text-sm md:text-lg lg:text-xl max-w-3xl leading-relaxed">
                     <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
-                      MANO DEEPAN
+                        MANO DEEPAN
                     </span>
 
                     <p className="mano-about mb-3">
-                        Hello! I'm a hardworking and passionate job seeker with strong JavaScript,
-                        Java, and ReactJS skills, eager to secure an entry-level Software Developer position.
+                        Hello! I am software Engineer with 2 years of experience in full-stack development and a growing focus on AI/ML
+                        engineering.
                     </p>
 
                     <p className="mano-about mb-3">
-                        Organized and dependable candidate, successful at managing multiple priorities with a positive attitude.
+                        Skilled in Python, Java, JavaScript, and modern frameworks, with hands-on projects in machine
+                        learning, time series analysis, and API-driven systems.
                     </p>
 
                     <p className="mano-about">
-                        I am a quick learner and ready to learn and implement required technologies.
+                        Seeking a Software Engineer role to contribute to
+                        scalable solutions and AI-driven applications.
                     </p>
                 </div>
             </div>
