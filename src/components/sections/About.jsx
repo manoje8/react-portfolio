@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
@@ -6,11 +6,45 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { loadSlim } from "tsparticles-slim";
 import Particles from "react-tsparticles";
 
+const header = ['PROJECTS', 'EXPERIENCE', 'EDUCATION']
+
+const all_skills = {
+    languages: 'Languages',
+    ai: 'AI/ML & Agentic Systems',
+    frameworks: 'Frameworks & Libraries',
+    tools: 'Tools & Platforms'
+}
+
+const skill_list = {
+    languages: ['Java', 'JavaScript', 'Python', 'SQL', 'NoSQL', 'C/C++'],
+    ai: ['LLMs (GPT, Claude)', 'LangChain', 'RAG (Retrieval-Augmented Generation)', 'Vector Databases (Qdrant, FAISS, Chroma)',
+        'Embeddings', 'Prompt Engineering', 'Fine-tuning', 'Multi-Agent Orchestration', 'NLP',
+    'Time Series Analysis'],
+    frameworks: ['Spring Boot', 'React.js', 'Node.js', 'FastAPI', 'TensorFlow', 'Transformers', 'NumPy', 'Pandas'],
+    tools: ['Git', 'Linux', 'Azure', 'AWS', 'GCP', 'REST APIs', 'Gradle', 'JWT', 'Docker']
+}
+
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger)
 
 const About = ({ title, setTitle }) => {
+    const [currentSkill, setCurrentSkill] = useState("languages")
+    const [activeIndex, setActiveIndex] = useState(0)
     const aboutRef = useRef(null)
     const particleContainerRef = useRef(null)
+    const skillKeys = Object.keys(all_skills)
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex((prevIndex) => {
+                const nextIndex = (prevIndex + 1) % skillKeys.length
+                const nextKey = skillKeys[nextIndex]
+                setCurrentSkill(nextKey)
+                return nextIndex
+            })
+        }, 15000) // 15 seconds
+
+        return () => clearInterval(interval)
+    }, [skillKeys])
 
     const particlesInit = async (engine) => {
         await loadSlim(engine);
@@ -99,8 +133,25 @@ const About = ({ title, setTitle }) => {
 
     }, [])
 
+    const display_skill = useMemo(() => {
+        const key = Object.keys(skill_list).find(e => e === currentSkill)
+        return key ? skill_list[key] : []
+    }, [currentSkill])
+
+    const handleSkillChange = (skillKey) => {
+        console.log('clicked')
+        setCurrentSkill(skillKey)
+        setActiveIndex(skillKeys.indexOf(skillKey))
+
+        gsap.fromTo('.skill-item',
+            { opacity: 0, x: 20 },
+            { opacity: 1, x: 0, duration: 0.4, stagger: 0.08 }
+        )
+    }
+
+
     return (
-        <div ref={aboutRef} className="relative min-h-screen flex flex-col justify-center items-center z-100">
+        <div ref={aboutRef} className="relative bg-green min-h-screen flex flex-col justify-center items-center">
             <div ref={particleContainerRef} className="absolute inset-0">
                 <Particles
                     id="tsparticles"
@@ -108,7 +159,7 @@ const About = ({ title, setTitle }) => {
                     options={particlesOptions}
                 />
             </div>
-            <header className="topbar fixed top-3 left-5">
+            <header className="topbar fixed top-3 left-5 z-100">
                 <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
                     <button onClick={() => (window.location.href = "/")} className='bg-black py-2 px-[12px] text-white text-md md:text-xl rounded-lg cursor-pointer'>m</button>
                     <div className="flex item-center justify-center gap-1 text-md">
@@ -120,8 +171,8 @@ const About = ({ title, setTitle }) => {
                     </div>
                 </div>
             </header>
-            <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6">
-                <div className="text-left sm:text-left text-sm md:text-lg lg:text-xl max-w-3xl leading-relaxed">
+            <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6 z-100">
+                <div className="w-2/3 text-left sm:text-left text-sm md:text-lg lg:text-xl leading-relaxed">
                     <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
                         MANO DEEPAN
                     </span>
@@ -140,13 +191,52 @@ const About = ({ title, setTitle }) => {
                         Seeking a Software Engineer role to contribute to
                         scalable solutions and AI-driven applications.
                     </p>
+
+                    <div className="mt-5">
+                        <ul className="skill-list flex gap-2 text-xl">
+                            {
+                                Object.entries(all_skills).map(([key, label]) => {
+                                    const isActive = key === currentSkill
+                                    return (
+                                        <li
+                                            key={key}
+                                            className={`skill-tab cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 ${
+                                                isActive
+                                                    ? 'bg-white text-black border-2 border-white shadow-lg'
+                                                    : 'text-white border-2 border-white/30 hover:border-white/70'
+                                            }`}
+                                            onClick={() => handleSkillChange(key)}
+                                        >
+                                            {label}
+                                            {isActive && (
+                                                <span className="ml-2 inline-block w-2 h-2 bg-[#595959] rounded-full animate-pulse"></span>
+                                            )}
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div className="w-full md:w-2/5">
+                    <div className="flex flex-wrap gap-3">
+                        {
+                            display_skill.map((skill, key) => {
+                                return (
+                                    <div
+                                        key={key}
+                                        className="skill-item bg-white/20 px-4 py-2 rounded-lg text-white text-sm md:text-base hover:bg-white/30 transition-all duration-300"
+                                    >
+                                        {skill}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
-
         </div>
     )
 }
 
 export default About
-
-const header = ['SKILLS', 'PROJECTS', 'EXPERIENCE', 'EDUCATION']
