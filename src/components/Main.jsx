@@ -45,9 +45,9 @@ const Main = () => {
             <div><About title={currentTitle} setTitle={setCurrentTitle}/></div>
             {/*<div><Skill setTitle={setCurrentTitle} /></div>*/}
             <div><Project setTitle={setCurrentTitle} /></div>
-            <div><Experience setTitle={setCurrentTitle} /></div>
+            <div><Experience className="parallax-section" setTitle={setCurrentTitle} /></div>
             <div className="parallax-section"><Education setTitle={setCurrentTitle} /></div>
-            <div className="parallax-section"><Contact setTitle={setCurrentTitle} /></div>
+            {/*<div className="parallax-section"><Contact setTitle={setCurrentTitle} /></div>*/}
         </section>
     )
 }

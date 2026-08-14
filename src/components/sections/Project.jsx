@@ -1,5 +1,5 @@
 import { projects } from "../../assets/data"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useGSAP } from "@gsap/react"
 import ScrollTrigger from "gsap/ScrollTrigger"
 import gsap from "gsap"
@@ -7,131 +7,178 @@ import SplitText from "gsap/SplitText"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-const Project = ({setTitle}) => {
+const pad = (n) => String(n).padStart(2, "0")
+
+const Project = ({ setTitle }) => {
     const containerRef = useRef()
-    const carouselRef = useRef()
+    const gridRef = useRef()
+    const rowRefs = useRef([])
+    const activeIndexRef = useRef(0)
+    const [activeIndex, setActiveIndex] = useState(0)
 
-    useGSAP(() => {
+    const nameRef = useRef()
+    const descRef = useRef()
+    const linkRef = useRef()
 
-        ScrollTrigger.create({
-            trigger: containerRef.current,
-            start: "top top",
-            onToggle: (toggle) => setTitle(toggle ? "Projects" : ""),
-        })
+    useGSAP(
+        () => {
+            ScrollTrigger.create({
+                trigger: containerRef.current,
+                start: "top top",
+                onToggle: (toggle) => setTitle(toggle ? "Projects" : ""),
+            })
 
-        SplitText.create('.project-header', {
-            type: "words, chars",
-            mask: "chars",
-            onSplit: (props) => {
-                return gsap.from(props.chars, {
-                    x: -90,
-                    duration: 0.8,
-                    ease: "power3.inOut",
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top top",
-                    }
-                })
+            SplitText.create(".project-header", {
+                type: "words, chars",
+                mask: "chars",
+                onSplit: (props) =>
+                    gsap.from(props.chars, {
+                        x: -90,
+                        duration: 0.8,
+                        ease: "power3.inOut",
+                        stagger: 0.02,
+                        scrollTrigger: {
+                            trigger: containerRef.current,
+                            start: "top 85%",
+                        },
+                    }),
+            })
+
+            gsap.from(gridRef.current, {
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: gridRef.current,
+                    start: "top 85%",
+                },
+            })
+
+            const activate = (i) => {
+                if (i === activeIndexRef.current) return
+                activeIndexRef.current = i
+                setActiveIndex(i)
+
+                const project = projects[i]
+                const targets = [ nameRef.current, descRef.current, linkRef.current]
+
+                gsap
+                    .timeline()
+                    .to(targets, {
+                        opacity: 0,
+                        y: -10,
+                        duration: 0.25,
+                        ease: "power2.in",
+                        stagger: 0.02,
+                    })
+                    .call(() => {
+                        nameRef.current.textContent = project.projectName
+                        descRef.current.textContent = project.summary
+                        linkRef.current.href = project.github
+                    })
+                    .fromTo(
+                        targets,
+                        { opacity: 0, y: 14 },
+                        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", stagger: 0.04 }
+                    )
             }
-        })
 
+            rowRefs.current.forEach((row, i) => {
+                if (!row) return
+                ScrollTrigger.create({
+                    trigger: row,
+                    start: "top 55%",
+                    end: "bottom 45%",
+                    onEnter: () => activate(i),
+                    onEnterBack: () => activate(i),
+                })
+            })
+        },
+        { scope: containerRef, dependencies: [] }
+    )
 
-        // Horizontal scroll
-        const panels = gsap.utils.toArray(".panel")
-        if (panels.length === 0) return
-        const totalWidth = panels.length * window.innerWidth
-
-        const horizontalScroll = gsap.to(panels, {
-            xPercent: -100 * (panels.length - 1),
-            ease: "none",
-        })
-
-        ScrollTrigger.create({
-            trigger: containerRef.current,
-            pin: true,
-            scrub: true,
-            start: "top top",
-            end: () => `+=${totalWidth - window.innerWidth}`,
-            animation: horizontalScroll,
-            anticipatePin: 1
-        })
-
-    }, [])
+    const handleRowClick = (i) => {
+        rowRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
 
     return (
         <div
             id="projects"
             ref={containerRef}
-            className="project-section w-full overflow-hidden cbr py-10 md:py-20"
-            style={{ height: "100vh" }}
+            className="project-section cbr relative w-full bg-[#0E1016] text-[#ECE9E1] px-6 md:px-16 lg:px-24 py-24 md:py-32"
         >
-
-            <div className="px-6 md:px-12 lg:px-20 mb-10">
-                <h1 className="project-header text-right text-3xl sm:text-4xl md:text-5xl font-bold  tracking-tight">
+            <div
+                className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#ECE9E1_1px,transparent_1px),linear-gradient(90deg,#ECE9E1_1px,transparent_1px)] [background-size:64px_64px]"
+            />
+            <div className="mb-20 md:mb-28 max-w-2xl">
+                <h1 className="project-header text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05]">
                     Projects
                 </h1>
-                <p className="mt-3 text-sm sm:text-base">
-                    A selection of my recent work — blending creativity and engineering.
-                </p>
+                <h3 className="mt-6 max-w-md text-base sm:text-lg text-[#ECE9E1]/60">
+                    A selection of recent work — blending creativity and engineering.
+                </h3>
             </div>
 
-            <div
-                ref={carouselRef}
-                className="projects-carousel flex w-max"
-                style={{ height: "calc(100vh - 200px)" }}
-            >
-                {projects.webProjects.map((project, id) => (
-                    <div
-                        key={id}
-                        className="panel flex-shrink-0 w-screen px-6 md:px-10 lg:px-16 flex justify-center"
-                    >
-                        <div className="bgr rounded-2xl shadow-xl w-full max-w-6xl h-[70vh] md:h-[75vh] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 transition-transform duration-300 hover:scale-[1.01]">
-                            <a
-                                href={project.preview}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="w-full md:w-1/2 flex justify-center"
-                            >
-                                <img
-                                    className="rounded-xl w-full h-[250px] sm:h-[300px] md:h-full object-contain"
-                                    src={project.image}
-                                    alt={project.projectName}
-                                />
-                            </a>
-
-                            <div className="flex flex-col justify-between w-full md:w-1/2 text-center md:text-left">
-                                <div>
-                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
-                                        {project.projectName}
-                                    </h3>
-                                    <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-6">
-                                        {project.summary}
-                                    </p>
-
-                                    <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-                                        {project.techStack.map((tech, idx) => (
-                                            <span
-                                                key={idx}
-                                                className="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
-                                            >
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <a
-                                    href={project.github}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="text-blue-600 hover:text-blue-800 font-semibold text-sm sm:text-base mt-2"
+            <div ref={gridRef} className="grid md:grid-cols-[1fr_1.1fr] gap-12 lg:gap-24 items-start">
+                <div className="flex flex-col border-b border-white/10">
+                    {projects?.map((project, id) => (
+                        <div
+                            key={id}
+                            ref={(el) => (rowRefs.current[id] = el)}
+                            onClick={() => handleRowClick(id)}
+                            className="group border-t border-white/10 py-8 md:py-10 cursor-pointer"
+                        >
+                            <div className="flex items-baseline justify-between gap-6">
+                                <span
+                                    className={`font-mono text-xs transition-colors duration-300 ${
+                                        activeIndex === id ? "text-[#8FE3C0]" : "text-[#4B4F63]"
+                                    }`}
                                 >
-                                    View Source Code →
-                                </a>
+                                    {pad(id + 1)}
+                                </span>
+                                <span
+                                    className={`flex-1 text-2xl md:text-3xl font-semibold tracking-tight transition-all duration-300 ${
+                                        activeIndex === id
+                                            ? "text-[#ECE9E1] translate-x-1"
+                                            : "text-[#ECE9E1]/35 group-hover:text-[#ECE9E1]/70"
+                                    }`}
+                                >
+                                    {project.projectName}
+                                </span>
+                                <span
+                                    className={`font-mono text-sm transition-all duration-300 ${
+                                        activeIndex === id
+                                            ? "opacity-100 translate-x-0 text-[#8FE3C0]"
+                                            : "opacity-0 -translate-x-2"
+                                    }`}
+                                >
+                                    →
+                                </span>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+
+                <div className="sticky top-24 md:top-28 lg:top-32 self-start">
+
+                    <h2 ref={nameRef} className="mt-4 text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+                        {projects?.[0]?.projectName}
+                    </h2>
+                    <p ref={descRef} className="text-xl mt-6 max-w-md text-base leading-relaxed text-[#ECE9E1]/65">
+                        {projects?.[0]?.summary}
+                    </p>
+                    <a
+                        ref={linkRef}
+                        href={projects?.[0]?.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#8FE3C0] transition-colors hover:text-[#ECE9E1]"
+                    >
+                        View project
+                        <span className="transition-transform group-hover:translate-x-1">↗</span>
+                    </a>
+                </div>
             </div>
         </div>
     )

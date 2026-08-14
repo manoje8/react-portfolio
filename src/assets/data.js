@@ -33,10 +33,10 @@ export const skills = [
 ];
 
 
-export const projects = {
-    webProjects: [
+export const projects = [
       {
         projectName: "Air flight",
+        type: "data",
         image: "",
         summary:
             "An end-to-end flight telemetry data engineering pipeline built with Apache Airflow, dbt, Snowflake, and Docker. ",
@@ -45,10 +45,11 @@ export const projects = {
         techStack: ["Python", "Airflow", "DBT", "Snowflake", "Docker"],
       },
       {
-        projectName: "Studious",
+        projectName: "Medici",
+        type: "ai",
         image: "",
         summary:
-            "Studious is a learning project that demonstrates how to build a sophisticated, agentic Retrieval-Augmented Generation system from the ground up.",
+            "Medici is a learning project that demonstrates how to build a sophisticated, agentic Retrieval-Augmented Generation system from the ground up.",
         preview: "",
         github: "https://github.com/manoje8/studious",
         techStack: ["Python", "FastAPI", "LangGraph", "Google Cloud", "Qdrant", "redis", "postgresql", "logfire"],
@@ -56,6 +57,7 @@ export const projects = {
       {
         projectName: "Shortify",
         image: shortify,
+        type: "mern",
         summary:
           "Shortify is a secure URL shortening service that empowers users to transform lengthy links into memorable, trackable short URLs.",
         preview: "https://eloquent-tanuki-57a622.netlify.app/",
@@ -64,6 +66,7 @@ export const projects = {
       },
       {
         projectName: "Simple Chat",
+        type: "mern",
         image: chat,
         summary:
           "A simple chat application built using the MERN Stack and Socket.io for real-time communication.",
@@ -73,6 +76,7 @@ export const projects = {
       },
       {
         projectName: "Customer Relationship Management",
+        type: "mern",
         image: crm,
         summary:
           "CRM is designed to help businesses manage customer relationships efficiently. It includes functionalities for customer profile management, communication tracking, feedback collection, and report generation.",
@@ -80,8 +84,8 @@ export const projects = {
         github: "https://github.com/manoje8/CRM-frontend",
         techStack: ["React JS", "Node js", "MongoDB", "JWT"],
       },
-    ]
-}
+]
+
 
 export const experience = [
     {

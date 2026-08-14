@@ -63,7 +63,7 @@ const Experience = ({ setTitle }) => {
         <section
             ref={experienceRef}
             id="experience"
-            className="exp-wrapper  text-white py-16 px-4 sm:px-8 md:px-12 lg:px-20"
+            className="exp-wrapper text-white py-16 px-4 sm:px-8 md:px-12 lg:px-20"
         >
             <div className="exp-container w-full h-screen flex flex-col justify-center items-center">
                 {/* Section Header */}

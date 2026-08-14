@@ -68,7 +68,6 @@ const Loader = ({setIsLoading}) => {
         <section className="absolute top-0 left-0 w-full h-full min-h-screen loader bg-gray-800 z-10000 overflow-hidden overscroll-none">
             <div className="flex flex-col justify-center items-center h-full">
                 <h2 className="sm:text-xl md:text-3xl loader-header">Mano Deepan</h2>
-                <h2 className="text-sm md:text-md loader-desc">Passionate developer crafting efficient and scalable applications</h2>
             </div>
         </section>
     )

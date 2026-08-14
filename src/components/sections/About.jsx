@@ -5,6 +5,7 @@ import SplitText from "gsap/SplitText";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { loadSlim } from "tsparticles-slim";
 import Particles from "react-tsparticles";
+import {Icon} from "@iconify/react";
 
 const header = ['PROJECTS', 'EXPERIENCE', 'EDUCATION']
 
@@ -171,6 +172,29 @@ const About = ({ title, setTitle }) => {
                     </div>
                 </div>
             </header>
+            <header className="topbar fixed top-3 right-5 z-100">
+                <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
+                    <div className="flex item-center justify-center gap-1 text-md">
+                        <div className="flex justify-center space-x-8">
+                            {[
+                                { icon: "mdi:email", href: "mailto:manodeepan2001@gmail.com", color: "hover:text-blue-700" },
+                                { icon: "mdi:linkedin", href: "https://www.linkedin.com/in/mano-deepan-b-392361208", color: "hover:text-blue-700" },
+                                { icon: "mdi:github", href: "https://github.com/manoje8", color: "hover:text-gray-800" },
+                            ].map((social, index) => (
+                                <a
+                                    key={index}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${social.color}`}
+                                >
+                                    <Icon icon={social.icon} height={40} width={40} />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </header>
             <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6 z-100">
                 <div className="w-2/3 text-left sm:text-left text-sm md:text-lg lg:text-xl leading-relaxed">
                     <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
@@ -178,7 +202,7 @@ const About = ({ title, setTitle }) => {
                     </span>
 
                     <p className="mano-about mb-3">
-                        Hello! I am software Engineer with 2 years of experience in full-stack development and a growing focus on AI/ML
+                        Hello! I am Software Engineer with 2 years of experience in full-stack development and a growing focus on AI/ML
                         engineering.
                     </p>
 
@@ -192,7 +216,7 @@ const About = ({ title, setTitle }) => {
                         scalable solutions and AI-driven applications.
                     </p>
 
-                    <div className="mt-5">
+                    <div className="mt-20">
                         <ul className="skill-list flex gap-2 text-xl">
                             {
                                 Object.entries(all_skills).map(([key, label]) => {
