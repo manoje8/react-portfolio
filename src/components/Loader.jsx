@@ -38,7 +38,7 @@ const Loader = ({setIsLoading}) => {
             filter: "blur(10px)",
             scale: 0.95,
             ease: "power2.inOut",
-            duration: 1.2,
+            duration: 1,
             stagger: {
                 each: 0.2,
                 from: "random"

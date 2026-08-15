@@ -17,47 +17,87 @@ const Experience = ({ setTitle }) => {
             onToggle: (toggle) => setTitle(toggle ? "Experience" : ""),
         });
 
-        const expContainer = document.querySelectorAll(".exp-container");
+        const rows = gsap.utils.toArray(".exp-row");
+        const splits = [];
 
-        expContainer.forEach((section) => {
-            const innerContainer = section.querySelector(".exp-inner-container");
-            const items = innerContainer.querySelectorAll(".exp-list-item");
-
-            items.forEach((item, i) => {
-                items.forEach((item, i) => {
-                    if (i !== 0) {
-                        gsap.set(item, { yPercent: 100 })
-                    }
-                })
-            })
-
-            const timeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    pin: true,
-                    start: "top top",
-                    end: () => `+=${(items.length - 1) * 100}%`,
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                },
-                defaults: { ease: "none" },
+        const setActiveIndex = (index) => {
+            gsap.to(".exp-marker", {
+                opacity: 0.35,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto",
+            });
+            gsap.to(rows[index].querySelector(".exp-marker"), {
+                opacity: 1,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto",
             });
 
-            items.forEach((item, index) => {
-                if (index < items.length - 1) {
-                    timeline.to(item, {
-                        scale: 0.9,
-                        borderRadius: "12px",
-                    });
-                    timeline.to(
-                        items[index + 1],
-                        { yPercent: 0 },
-                        "<"
-                    );
-                }
+            gsap.to(".exp-progress-fill", {
+                scaleY: (index + 1) / rows.length,
+                duration: 0.6,
+                ease: "power3.out",
+                overwrite: "auto",
+            });
+
+            const counter = experienceRef.current.querySelector(".exp-counter-current");
+            if (counter) counter.textContent = String(index + 1).padStart(2, "0");
+        };
+
+        rows.forEach((row, index) => {
+            const card = row.querySelector(".exp-card");
+            const titleEl = row.querySelector(".exp-title-text");
+            const subtitleEl = row.querySelector(".exp-subtitle");
+            const bullets = row.querySelectorAll(".exp-bullet");
+            const tags = row.querySelectorAll(".exp-tag");
+            const duration = row.querySelector(".exp-duration");
+
+            const titleSplit = new SplitText(titleEl, { type: "chars", charsClass: "exp-char" });
+            const subtitleSplit = new SplitText(subtitleEl, { type: "lines", linesClass: "exp-line" });
+            splits.push(titleSplit, subtitleSplit);
+
+            gsap.set(titleSplit.chars, { yPercent: 110, opacity: 0 });
+            gsap.set(subtitleSplit.lines, { yPercent: 100, opacity: 0 });
+            gsap.set(card, { opacity: 0, y: 56, scale: 0.96 });
+            gsap.set(duration, { opacity: 0, x: -8 });
+            gsap.set(bullets, { opacity: 0, x: -16 });
+            gsap.set(tags, { opacity: 0, y: 10 });
+
+            const revealTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: row,
+                    start: "top 78%",
+                    end: "top 40%",
+                    toggleActions: "play none none reverse",
+                },
+                defaults: { ease: "power4.out" },
+            });
+
+            revealTl
+                .to(card, { opacity: 1, y: 0, scale: 1, duration: 0.9 })
+                .to(titleSplit.chars, { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.018 }, "<0.1")
+                .to(duration, { opacity: 1, x: 0, duration: 0.5 }, "<")
+                .to(subtitleSplit.lines, { yPercent: 0, opacity: 1, duration: 0.6, stagger: 0.08 }, "<0.15")
+                .to(bullets, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: "power2.out" }, "<0.1")
+                .to(tags, { opacity: 1, y: 0, duration: 0.45, stagger: 0.04, ease: "back.out(1.7)" }, "<0.15");
+
+            ScrollTrigger.create({
+                trigger: row,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => setActiveIndex(index),
+                onEnterBack: () => setActiveIndex(index),
             });
         });
+
+        return () => splits.forEach((split) => split.revert());
     }, []);
+
+    const scrollToRow = (index) => {
+        const row = experienceRef.current?.querySelectorAll(".exp-row")[index];
+        if (row) row.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
 
     return (
         <section
@@ -65,62 +105,72 @@ const Experience = ({ setTitle }) => {
             id="experience"
             className="exp-wrapper text-white py-16 px-4 sm:px-8 md:px-12 lg:px-20"
         >
-            <div className="exp-container w-full h-screen flex flex-col justify-center items-center">
-                {/* Section Header */}
-                <header className="w-full mb-8 text-center sm:text-left">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-                        Experience
-                    </h1>
-                    <p className="text-white mt-2 text-sm sm:text-base">
-                        A journey through my professional roles and achievements.
-                    </p>
-                </header>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,300px)_1fr] gap-12 lg:gap-16">
+                <aside className="lg:sticky lg:top-24 h-fit flex flex-col gap-10 order-1">
+                    <header className="text-center sm:text-left">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+                            Experience
+                        </h1>
+                        <p className="cbr mt-2 text-sm sm:text-base max-w-xs mx-auto sm:mx-0">
+                            A journey through my professional roles and achievements.
+                        </p>
+                    </header>
 
-                {/* Experience Items */}
-                <div className="exp-inner-container relative w-full h-full overflow-hidden">
-                    <div className="exp-list w-full h-full flex items-center justify-center relative">
-                        {experience?.map((data, id) => (
-                            <article
-                                key={id}
-                                className="exp-list-item absolute top-0 left-0 w-full h-full flex items-center justify-center"
-                            >
-                                <div className="experience-label bgr backdrop-blur-md shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 w-[90%] sm:w-4/5 md:w-3/5 transition-all duration-500">
-                                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between">
-                                        {data.title}
-                                        <span className="text-sm sm:text-base cbr mt-1 sm:mt-0">
-                                          {data.duration}
-                                        </span>
-                                    </h2>
-
-                                    <span className="block cbr font-medium mt-2 text-sm sm:text-base">
-                                    {data.subtitle}
-                                  </span>
-
-                                    <ul className="mt-4 space-y-2 text-[11px] sm:text-base cbr leading-relaxed">
-                                        {data.details.map((details, idx) => (
-                                            <li key={idx} className="flex items-start gap-2">
-                                                <span className="text-primary font-bold">•</span>
-                                                {details}
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    {data.tags && (
-                                        <div className="flex flex-wrap gap-2 mt-6">
-                                            {data.tags.map((skill, idx) => (
-                                                <span
-                                                    key={idx}
-                                                    className="px-3 py-1 text-xs sm:text-sm bg-gray-100 text-gray-800 rounded-full border border-gray-200 hover:bg-gray-200 transition"
-                                                >
-                          {skill}
+                    <div className="flex items-end gap-2 justify-center sm:justify-start">
+                        <span className="exp-counter-current text-4xl sm:text-5xl font-bold text-[#ECE9E1] tabular-nums">
+                            01
                         </span>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </article>
-                        ))}
+                        <span className="cbr text-sm mb-1">
+                            / {String(experience?.length ?? 0).padStart(2, "0")}
+                        </span>
                     </div>
+
+                    <div className="hidden lg:flex items-stretch gap-4">
+                        <div className="relative w-px bg-white/15 self-stretch">
+                            <div className="exp-progress-fill absolute top-0 left-0 w-full h-full bg-[#ECE9E1] origin-top scale-y-0" />
+                        </div>
+                        <ul className="flex flex-col gap-8">
+                            {experience?.map((data, id) => (
+                                <li key={id}>
+                                    <button
+                                        type="button"
+                                        onClick={() => scrollToRow(id)}
+                                        className="exp-marker text-left opacity-35 transition-opacity"
+                                    >
+                                        <span className="block text-xs uppercase tracking-widest cbr">
+                                            {String(id + 1).padStart(2, "0")}
+                                        </span>
+                                        <span className="block text-sm text-white mt-1">{data.title}</span>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </aside>
+
+                <div className="flex flex-col gap-24 sm:gap-32 order-2">
+                    {experience?.map((data, id) => (
+                        <div key={id} className="exp-row">
+                            <article className="exp-card  rounded-2xl p-6 sm:p-8 md:p-10 lg:p-10">
+                                <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between">
+                                    <b className="exp-title overflow-hidden">
+                                        <span className="inline-block">{data.title}</span>
+                                    </b>
+                                    <span className="exp-duration text-sm sm:text-base cbr mt-1 sm:mt-0">
+                                        {data.duration}
+                                    </span>
+                                </h1>
+
+                                <h3 className="exp-subtitle block cbr font-medium mt-2 text-3xl sm:text-base overflow-hidden">
+                                    {data.subtitle}
+                                </h3>
+
+                                <p className="mt-4 space-y-2 text-xl sm:text-base cbr leading-relaxed">
+                                    {data.details}
+                                </p>
+                            </article>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

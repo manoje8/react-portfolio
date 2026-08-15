@@ -1,12 +1,10 @@
 import "./Main.css"
 import About from "./sections/About"
-import Contact from "./sections/Contact"
 import Education from "./sections/Education"
 import Experience from "./sections/Experience"
 import Project from "./sections/Project"
-import Skill from "./sections/Skill"
 
-import {useEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import {useGSAP} from "@gsap/react";
@@ -46,7 +44,7 @@ const Main = () => {
             {/*<div><Skill setTitle={setCurrentTitle} /></div>*/}
             <div><Project setTitle={setCurrentTitle} /></div>
             <div><Experience className="parallax-section" setTitle={setCurrentTitle} /></div>
-            <div className="parallax-section"><Education setTitle={setCurrentTitle} /></div>
+            <div><Education setTitle={setCurrentTitle} /></div>
             {/*<div className="parallax-section"><Contact setTitle={setCurrentTitle} /></div>*/}
         </section>
     )

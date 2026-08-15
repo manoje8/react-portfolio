@@ -1,8 +1,6 @@
 import chat from "./images/chat.png"
 import crm from "./images/crm.png"
-import ebook from "./images/ebook.png"
 import shortify from "./images/shortify.png"
-import todoFlow from "./images/todo-flow.png"
 
 export const bio = [
     "Hello! I'm Mano Deepan, a hardworking and passionate job seeker with strong JavaScript, Java, and ReactJS, skills and eager to secure an entry-level Software Developer position",
@@ -91,14 +89,10 @@ export const experience = [
     {
       title: "Connect Prodigy Consulting Company",
       duration: "2023 - 2024",
-      subtitle: "Software Engineer Trainee",
-      details: [
-        `ETL Migration from OnPrem solution to Cloud Based solution with Automated XMl to JSON
-                conversion`,
-        `Unit tests (JUnit) for a converter,ensuring its accuracy and handling of various scenarios`,
-        `Created a Drools-based validation framework to identify potential conversion issues within the converter`,
-        `Testing and validating the input and output of the converter`,
-      ],
+      subtitle: "Software Engineer",
+      details: "Tested and validated an ETL migration from an on-premises system to a cloud based platform, ensuring data integrity\n" +
+          "throughout the transition. Developed a simple XML to JSON transformer and implemented Drools rules to detect\n" +
+          "missing placeholders and flag unsupported transformer issues.",
       tags: [
         "Java",
         "Spring",
@@ -108,12 +102,11 @@ export const experience = [
     },
     {
       title: "Knexta Technologies",
-      duration: "2025 - present",
+      duration: "2025 - 2026",
       subtitle: "Software Developer",
-      details: [
-        `RippleThrive is a SaaS-based Accounts Receivables solution to automate and streamline your accounts receivables process`,
-        `Automate your repetitive low-value add activities & focus on strategic high value add activities with cash flow improvement.`,
-      ],
+      details: "Developed and maintained full-stack web applications, focusing on backend optimization, API development, and cloud\n" +
+          "deployment. Built and integrated AI powered features into production systems. Collaborated with cross functional teams\n" +
+          "to deliver features end-to-end, translating requirements into production-ready interfaces and scalable backend services.",
       tags: [
         "React JS",
         "Node JS",
@@ -141,36 +134,3 @@ export const education = [
     },
   ];
 
-
-const ICONS = {
-  java: 'devicon:java',
-  javascript: 'devicon:javascript-plain',
-  python: 'devicon:python-plain',
-  c: '',
-  cplusplus: '',
-  sql: '',
-  nosql: '',
-  html: '',
-  css: '',
-  jquery: '',
-  reactjs: '',
-  redux: '',
-  nodejs: '',
-  tailwindcss: '',
-  gsap: '',
-  git: '',
-  chromedevtools: '',
-  linux: '',
-  fastapi: '',
-  springboot: '',
-  redis: '',
-  googlecloud: '',
-  awsdeployment: '',
-  postgresql: '',
-  mysql: '',
-  mongodb: '',
-  restapi: '',
-  graphql: '',
-  socket: '',
-  nginx: '',
-}

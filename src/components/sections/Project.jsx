@@ -132,7 +132,7 @@ const Project = ({ setTitle }) => {
                             <div className="flex items-baseline justify-between gap-6">
                                 <span
                                     className={`font-mono text-xs transition-colors duration-300 ${
-                                        activeIndex === id ? "text-[#8FE3C0]" : "text-[#4B4F63]"
+                                        activeIndex === id ? "text-[#ECE9E1]" : "text-[#4B4F63]"
                                     }`}
                                 >
                                     {pad(id + 1)}

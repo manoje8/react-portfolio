@@ -242,7 +242,7 @@ const About = ({ title, setTitle }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-full md:w-2/5">
+                <div className="w-full md:w-2/5 flex flex-col justify-between">
                     <div className="flex flex-wrap gap-3">
                         {
                             display_skill.map((skill, key) => {
@@ -257,6 +257,10 @@ const About = ({ title, setTitle }) => {
                             })
                         }
                     </div>
+                    <a  href="https://drive.google.com/file/d/1HPKjFdKSsdb8m8rCMBVXPifgRcg3OauV/view?usp=drive_link" target="_blank"
+                        rel="noreferrer" className="w-full bg-white flex align-center justify-center mb-2 rounded-md">
+                        <span className="text-black py-3">Resume</span>
+                    </a>
                 </div>
             </div>
         </div>
