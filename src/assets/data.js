@@ -37,7 +37,7 @@ export const projects = [
         type: "data",
         image: "",
         summary:
-            "An end-to-end flight telemetry data engineering pipeline built with Apache Airflow, dbt, Snowflake, and Docker. ",
+"End-to-end flight telemetry pipeline with Apache Airflow, dbt, Snowflake, and Docker - ingests live OpenSky data, transforms through Bronze - Silver - Gold medallion layers, enriches with ML predictions (Random Forest + Isolation Forest), and visualizes via a real-time Streamlit dashboard.",        
         preview: "",
         github: "https://github.com/manoje8/air-flight",
         techStack: ["Python", "Airflow", "DBT", "Snowflake", "Docker"],
@@ -47,28 +47,37 @@ export const projects = [
         type: "ai",
         image: "",
         summary:
-            "Medici is a learning project that demonstrates how to build a sophisticated, agentic Retrieval-Augmented Generation system from the ground up.",
+"Production-grade Agentic RAG pipeline orchestrated by LangGraph - features multi-turn memory, hybrid search (dense + BM25 + RRF + FlashRank), self-correcting retrieval loops, category-specific synthesis strategies, and multi-format document ingestion with prompt-injection safeguards.",        
         preview: "",
         github: "https://github.com/manoje8/studious",
         techStack: ["Python", "FastAPI", "LangGraph", "Google Cloud", "Qdrant", "redis", "postgresql", "logfire"],
       },
       {
-        projectName: "Shortify",
-        image: shortify,
-        type: "mern",
-        summary:
-          "Shortify is a secure URL shortening service that empowers users to transform lengthy links into memorable, trackable short URLs.",
-        preview: "https://eloquent-tanuki-57a622.netlify.app/",
-        github: "https://github.com/manoje8/urlshortener-frontend",
-        techStack: ["React JS", "Bootstrap v4.6", "Node js", "MongoDB", "JWT"],
+        projectName: "Treant",
+        type: "ai",
+        image: "",
+        summary: 
+        "Document parsing tool that extracts structured content from PDFs, Office documents, HTML, and text files using Docling and Google Document AI, supports multiple backends and provides CLI-based extraction with statistics.",
+        preview: "",
+        github: "https://github.com/manoje8/treant",
+        techStack: ["Python", "Google Cloud", "Docling"],
       },
+      // {
+      //   projectName: "Shortify",
+      //   image: shortify,
+      //   type: "mern",
+      //   summary:
+      // "A secure and scalable URL shortening service that transforms long URLs into short, trackable links with efficient redirection and link management.",
+      //   preview: "https://eloquent-tanuki-57a622.netlify.app/",
+      //   github: "https://github.com/manoje8/urlshortener-frontend",
+      //   techStack: ["React JS", "Bootstrap v4.6", "Node js", "MongoDB", "JWT"],
+      // },
       {
         projectName: "Simple Chat",
         type: "mern",
         image: chat,
         summary:
-          "A simple chat application built using the MERN Stack and Socket.io for real-time communication.",
-        preview: "https://stunning-monstera-2a6b5d.netlify.app/",
+ "Real-time chat application built with the MERN stack and Socket.io — includes Firebase authentication, typing indicators, online user presence, and instant messaging.",        preview: "https://stunning-monstera-2a6b5d.netlify.app/",
         github: "https://github.com/manoje8/simple-chat",
         techStack: ["React JS", "Bootstrap v4.6", "Node js", "MongoDB", "Firebase"],
       },
@@ -77,7 +86,7 @@ export const projects = [
         type: "mern",
         image: crm,
         summary:
-          "CRM is designed to help businesses manage customer relationships efficiently. It includes functionalities for customer profile management, communication tracking, feedback collection, and report generation.",
+"Full-stack CRM for managing customer profiles, tracking communication history, collecting employee feedback, and generating data-driven reports — built with React, Node.js, Express, and MongoDB with role-based access control (Admin, Manager, Employee).",        
         preview: "https://cozy-flan-a08f87.netlify.app/",
         github: "https://github.com/manoje8/CRM-frontend",
         techStack: ["React JS", "Node js", "MongoDB", "JWT"],

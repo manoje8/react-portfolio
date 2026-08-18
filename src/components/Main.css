@@ -62,14 +62,8 @@
     padding: 0 4.5em;
 }
 
-@media screen and (max-width: 768px) {
-	.content {
-		position: absolute;
-		left: 0;
-		width: 100%;
-		padding: 0 1em;
-	}
-}
+
+
 
 .subtitle h1{
     margin-bottom: 20px;

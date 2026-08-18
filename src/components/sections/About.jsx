@@ -160,22 +160,24 @@ const About = ({ title, setTitle }) => {
                     options={particlesOptions}
                 />
             </div>
-            <header className="topbar fixed top-3 left-5 z-100">
-                <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
-                    <button onClick={() => (window.location.href = "/")} className='bg-black py-2 px-[12px] text-white text-md md:text-xl rounded-lg cursor-pointer'>m</button>
-                    <div className="flex item-center justify-center gap-1 text-md">
-                        {
-                            header.map((item, idx) => (
-                                <a href={`#${item.toLowerCase()}`} className={`text-center p-1`} key={idx}>{item}</a>
-                            ))
-                        }
+
+            {/* Single unified topbar: nav on left, social icons on right */}
+            <header className="topbar fixed top-3 left-0 right-0 z-[500] px-4 sm:px-5 pointer-events-none">
+                <div className="flex justify-between items-center gap-2">
+                    {/* Left: nav links */}
+                    <div className="pointer-events-auto flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
+                        <button onClick={() => (window.location.href = "/")} className='bg-black py-1.5 px-[10px] text-white text-sm md:text-xl rounded-lg cursor-pointer'>m</button>
+                        <div className="flex items-center justify-center gap-1 text-xs sm:text-sm md:text-md">
+                            {
+                                header.map((item, idx) => (
+                                    <a href={`#${item.toLowerCase()}`} className={`text-center p-1`} key={idx}>{item}</a>
+                                ))
+                            }
+                        </div>
                     </div>
-                </div>
-            </header>
-            <header className="topbar fixed top-3 right-5 z-100">
-                <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
-                    <div className="flex item-center justify-center gap-1 text-md">
-                        <div className="flex justify-center space-x-8">
+                    {/* Right: social icons */}
+                    <div className="pointer-events-auto flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
+                        <div className="flex justify-center space-x-3 sm:space-x-5">
                             {[
                                 { icon: "mdi:email", href: "mailto:manodeepan2001@gmail.com", color: "hover:text-blue-700" },
                                 { icon: "mdi:linkedin", href: "https://www.linkedin.com/in/mano-deepan-b-392361208", color: "hover:text-blue-700" },
@@ -188,16 +190,19 @@ const About = ({ title, setTitle }) => {
                                     rel="noopener noreferrer"
                                     className={`transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${social.color}`}
                                 >
-                                    <Icon icon={social.icon} height={40} width={40} />
+                                    <Icon icon={social.icon} height={28} width={28} className="sm:h-9 sm:w-9" />
                                 </a>
                             ))}
                         </div>
                     </div>
                 </div>
             </header>
-            <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6 z-100">
-                <div className="w-2/3 text-left sm:text-left text-sm md:text-lg lg:text-xl leading-relaxed">
-                    <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
+
+            {/* Main content: stacked on mobile, side-by-side on md+ */}
+            <div className="w-full flex flex-col md:flex-row justify-between px-4 sm:px-6 md:px-10 pt-20 pb-6 z-[100] gap-8">
+                {/* Left: bio + skill tabs */}
+                <div className="w-full md:w-3/5 text-left text-sm md:text-lg lg:text-xl leading-relaxed">
+                    <span className="block text-4xl sm:text-5xl md:text-[60px] lg:text-[82px] font-bold mano mb-4 leading-tight">
                         MANO DEEPAN
                     </span>
 
@@ -216,15 +221,15 @@ const About = ({ title, setTitle }) => {
                         scalable solutions and AI-driven applications.
                     </p>
 
-                    <div className="mt-20">
-                        <ul className="skill-list flex gap-2 text-xl">
+                    <div className="mt-8 md:mt-20">
+                        <ul className="skill-list flex flex-wrap gap-2 text-sm md:text-base lg:text-xl">
                             {
                                 Object.entries(all_skills).map(([key, label]) => {
                                     const isActive = key === currentSkill
                                     return (
                                         <li
                                             key={key}
-                                            className={`skill-tab cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 ${
+                                            className={`skill-tab cursor-pointer px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-300 ${
                                                 isActive
                                                     ? 'bg-white text-black border-2 border-white shadow-lg'
                                                     : 'text-white border-2 border-white/30 hover:border-white/70'
@@ -242,14 +247,16 @@ const About = ({ title, setTitle }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-full md:w-2/5 flex flex-col justify-between">
-                    <div className="flex flex-wrap gap-3">
+
+                {/* Right: skill items + resume */}
+                <div className="w-full md:w-2/5 flex flex-col justify-between gap-6">
+                    <div className="flex flex-wrap gap-2 md:gap-3">
                         {
                             display_skill.map((skill, key) => {
                                 return (
                                     <div
                                         key={key}
-                                        className="skill-item bg-white/20 px-4 py-2 rounded-lg text-white text-sm md:text-base hover:bg-white/30 transition-all duration-300"
+                                        className="skill-item bg-white/20 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-white text-sm md:text-base hover:bg-white/30 transition-all duration-300"
                                     >
                                         {skill}
                                     </div>

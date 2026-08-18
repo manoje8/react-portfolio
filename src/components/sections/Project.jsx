@@ -121,7 +121,8 @@ const Project = ({ setTitle }) => {
             </div>
 
             <div ref={gridRef} className="grid md:grid-cols-[1fr_1.1fr] gap-12 lg:gap-24 items-start">
-                <div className="flex flex-col border-b border-white/10">
+                {/* Project list — shown second on mobile, first on md+ */}
+                <div className="flex flex-col border-b border-white/10 order-2 md:order-1">
                     {projects?.map((project, id) => (
                         <div
                             key={id}
@@ -160,12 +161,12 @@ const Project = ({ setTitle }) => {
                     ))}
                 </div>
 
-                <div className="sticky top-24 md:top-28 lg:top-32 self-start">
-
-                    <h2 ref={nameRef} className="mt-4 text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+                {/* Detail panel — shown first on mobile, second on md+; sticky only on md+ */}
+                <div className="order-1 md:order-2 md:sticky md:top-24 lg:top-32 self-start">
+                    <h2 ref={nameRef} className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">
                         {projects?.[0]?.projectName}
                     </h2>
-                    <p ref={descRef} className="text-xl mt-6 max-w-md text-base leading-relaxed text-[#ECE9E1]/65">
+                    <p ref={descRef} className="mt-4 md:mt-6 max-w-md text-base leading-relaxed text-[#ECE9E1]/65">
                         {projects?.[0]?.summary}
                     </p>
                     <a
@@ -173,7 +174,7 @@ const Project = ({ setTitle }) => {
                         href={projects?.[0]?.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#8FE3C0] transition-colors hover:text-[#ECE9E1]"
+                        className="mt-6 md:mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#8FE3C0] transition-colors hover:text-[#ECE9E1]"
                     >
                         View project
                         <span className="transition-transform group-hover:translate-x-1">↗</span>

@@ -161,11 +161,11 @@ const Experience = ({ setTitle }) => {
                                     </span>
                                 </h1>
 
-                                <h3 className="exp-subtitle block cbr font-medium mt-2 text-3xl sm:text-base overflow-hidden">
+                                <h3 className="exp-subtitle block cbr font-medium mt-2 text-base overflow-hidden">
                                     {data.subtitle}
                                 </h3>
 
-                                <p className="mt-4 space-y-2 text-xl sm:text-base cbr leading-relaxed">
+                                <p className="mt-4 space-y-2 text-sm sm:text-base cbr leading-relaxed">
                                     {data.details}
                                 </p>
                             </article>

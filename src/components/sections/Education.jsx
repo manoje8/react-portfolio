@@ -126,7 +126,7 @@ const Education = ({ setTitle }) => {
     return (
         <section
             ref={educationRef}
-            className="relative min-h-screen cbr w-full bg-[#0E1016] text-[#ECE9E1] text-zinc-100 py-15 px-6 md:px-16 lg:px-24 overflow-hidden select-none"
+            className="relative min-h-screen cbr w-full bg-[#0E1016] text-[#ECE9E1] text-zinc-100 py-14 px-6 md:px-16 lg:px-24 overflow-hidden select-none"
             id="education"
         >
             <div
