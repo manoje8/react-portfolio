@@ -15,20 +15,30 @@
 	transition: 0.5s;
 }
 
-
-.about, 
-.skill, 
-.project, 
-.experience, 
-.education, 
-.contact, 
-.footer {
-    padding-top: 3em;
-	padding-bottom: 0em;
-	clear: both;
-	width: 100%;
-	display: block;
+.skill-list li{
+	border: 1px solid #cccccc;
+	border-radius: 10px;
+	padding: 5px 10px;
 }
+
+
+.parallax-section {
+	min-height: 100vh; /* full screen feel */
+	padding: 80px 20px;
+	will-change: transform;
+}
+
+.project-container {
+	display: flex;
+	overflow-x: visible;
+}
+
+.panel {
+	flex: 0 0 100vw;
+	height: 100vh;
+	display: flex;
+}
+
 
 @media screen and (max-width: 768px) {
 	.about, 
@@ -52,14 +62,8 @@
     padding: 0 4.5em;
 }
 
-@media screen and (max-width: 768px) {
-	.content {
-		position: absolute;
-		left: 0;
-		width: 100%;
-		padding: 0 1em;
-	}
-}
+
+
 
 .subtitle h1{
     margin-bottom: 20px;
@@ -193,7 +197,6 @@
 }
 
 .sub-menu {
-	display: none;
 	/* background: #086909; */
 	font-size: 14px;
 	padding-left: 0px;
@@ -233,12 +236,6 @@
 	font-size: 12px;
 }
 
-.project-heading {
-	font-weight: 600;
-	margin-bottom: 10px;
-	color: #000;
-	margin-bottom: 2px;
-}
 
 .project-description {
 	font-size: 12px;
@@ -312,59 +309,5 @@ span {
     border-radius: 10px;
 }
 
-/*-------------------- Experience -------------------*/
-.experience-container {
-    position: relative;
-    margin-bottom: 30px;
-
-}
-
-.experience-container .experience-content {
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    clear: both;
-}
-.experience-container .experience-content .experience-label {
-    position: relative;
-    background: #e1e5f2;
-    color: #000;
-    padding: 1.5em;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    border-radius: 4px;
-}
-
-.experience-container .experience-content .experience-label h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-}
-
-.experience-container .experience-content .experience-label h2 span {
-    -webkit-opacity: 0.4;
-    -moz-opacity: 0.4;
-    opacity: 0.4;
-    -ms-filter: alpha(opacity = 40);
-    filter: alpha(opacity = 40);
-    font-size: 16px;
-}
-
-.experience-container .experience-content .experience-label .role {
-    font-weight: 600;
-    margin: 0 0px 5px;
-}
-
-.experience-container .experience-content .experience-label .label-content {
-    margin-bottom: 0px;
-    font-size: 13px;
-}
-
-.experience-container .experience-content .experience-label p + p{
-    margin-bottom: 0px;
-}
 
 
