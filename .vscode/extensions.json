@@ -1,25 +1,25 @@
 {
   "recommendations": [
-    // ── Formatting & Linting ───────────────────────────────────────────────
+    // Formatting & Linting
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
 
-    // ── React & JS DX ─────────────────────────────────────────────────────
+    // React & JS DX
     "dsznajder.es7-react-js-snippets",
     "burkeholland.simple-react-snippets",
     "formulahendry.auto-rename-tag",
     "christian-kohler.path-intellisense",
 
-    // ── CSS & Tailwind ─────────────────────────────────────────────────────
+    // CSS & Tailwind
     "bradlc.vscode-tailwindcss",
     "naumovs.color-highlight",
 
-    // ── Git ────────────────────────────────────────────────────────────────
+    // Git
     "eamodio.gitlens",
     "mhutchie.git-graph",
 
-    // ── Productivity ───────────────────────────────────────────────────────
+    // Productivity
     "streetsidesoftware.code-spell-checker",
     "usernamehw.errorlens"
   ]

@@ -12,33 +12,33 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
 
-  // ── File associations ────────────────────────────────────────────────────
+  // File associations
   "files.associations": {
     "*.css": "css",
     "Makefile": "makefile"
   },
 
-  // ── Exclude noisy folders from explorer ─────────────────────────────────
+  // Exclude noisy folders from explorer
   "files.exclude": {
     "node_modules": true,
     "build": true,
     ".eslintcache": true
   },
 
-  // ── Per-language formatter overrides ────────────────────────────────────
+  // Per-language formatter overrides
   "[javascript]":  { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[css]":         { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[json]":        { "editor.defaultFormatter": "esbenp.prettier-vscode" },
 
-  // ── ESLint integration ───────────────────────────────────────────────────
+  // ESLint integration
   "eslint.validate": ["javascript", "javascriptreact"],
   "eslint.workingDirectories": ["./"],
 
-  // ── Emmet for JSX ────────────────────────────────────────────────────────
+  // Emmet for JSX
   "emmet.includeLanguages": { "javascript": "javascriptreact" },
   "emmet.triggerExpansionOnTab": true,
 
-  // ── Terminal ─────────────────────────────────────────────────────────────
+  // Terminal
   "terminal.integrated.defaultProfile.windows": "Git Bash"
 }

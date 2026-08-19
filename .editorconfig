@@ -3,7 +3,7 @@
 
 root = true
 
-# ── All files ────────────────────────────────────────────────────────────────
+# All files
 [*]
 charset                  = utf-8
 end_of_line              = lf
@@ -12,15 +12,15 @@ trim_trailing_whitespace = true
 indent_style             = space
 indent_size              = 2
 
-# ── Markdown (preserve trailing whitespace for line breaks) ──────────────────
+# Markdown (preserve trailing whitespace for line breaks)
 [*.md]
 trim_trailing_whitespace = false
 
-# ── Makefile (requires tabs) ─────────────────────────────────────────────────
+# Makefile (requires tabs)
 [Makefile]
 indent_style = tab
 indent_size  = 4
 
-# ── JSON / YAML ──────────────────────────────────────────────────────────────
+# JSON / YAML
 [*.{json,yml,yaml}]
 indent_size = 2
