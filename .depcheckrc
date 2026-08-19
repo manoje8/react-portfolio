@@ -1,0 +1,4 @@
+{
+  "ignores": ["react-scripts", "web-vitals", "@testing-library/*"],
+  "ignorePatterns": ["**/*.test.js", "**/*.spec.js"]
+}
