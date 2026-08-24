@@ -9,7 +9,7 @@
 # =============================================================================
 
 .DEFAULT_GOAL := help
-SHELL         := C:/Program Files/Git/bin/bash.exe
+SHELL         := bash
 
 .PHONY: help \
         install start build clean analyze \

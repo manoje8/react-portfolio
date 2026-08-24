@@ -292,6 +292,7 @@ const About = ({ title, setTitle }) => {
             })}
           </div>
           <a
+            onClick={() => window.umami?.track("resume-preview")}
             href="https://drive.google.com/file/d/1HPKjFdKSsdb8m8rCMBVXPifgRcg3OauV/view?usp=drive_link"
             target="_blank"
             rel="noreferrer"
