@@ -104,12 +104,19 @@ const Project = ({ setTitle }) => {
   );
 
   const handleRowClick = (i) => {
-    activateRef.current?.(i);
-    isClickScrollingRef.current = true;
-    rowRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setTimeout(() => {
-      isClickScrollingRef.current = false;
-    }, 600);
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      const next = activeIndex === i ? -1 : i;
+      activeIndexRef.current = next;
+      setActiveIndex(next);
+    } else {
+      activateRef.current?.(i);
+      isClickScrollingRef.current = true;
+      rowRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 600);
+    }
   };
 
   return (
@@ -129,8 +136,7 @@ const Project = ({ setTitle }) => {
       </div>
 
       <div ref={gridRef} className="grid md:grid-cols-[1fr_1.1fr] gap-12 lg:gap-24 items-start">
-        {/* Project list — shown second on mobile, first on md+ */}
-        <div className="flex flex-col border-b border-white/10 order-2 md:order-1">
+        <div className="flex flex-col border-b border-white/10 order-1">
           {projects?.map((project, id) => (
             <div
               key={id}
@@ -165,12 +171,30 @@ const Project = ({ setTitle }) => {
                   →
                 </span>
               </div>
+
+              {/* Inline detail — mobile only */}
+              <div
+                className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+                  activeIndex === id ? "max-h-60 opacity-100 mt-4" : "max-h-0 opacity-0"
+                }`}
+              >
+                <p className="text-sm leading-relaxed text-[#ECE9E1]/65">{project.summary}</p>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-[#8FE3C0] transition-colors hover:text-[#ECE9E1]"
+                >
+                  View project
+                  <span className="transition-transform group-hover:translate-x-1">↗</span>
+                </a>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Detail panel — shown first on mobile, second on md+; sticky only on md+ */}
-        <div className="order-1 md:order-2 md:sticky md:top-24 lg:top-32 self-start">
+        {/* Detail panel — desktop only, sticky */}
+        <div className="hidden md:block md:order-2 md:sticky md:top-24 lg:top-32 self-start">
           <h2
             ref={nameRef}
             className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight"
