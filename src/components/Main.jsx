@@ -3,8 +3,9 @@ import About from "./sections/About"
 import Education from "./sections/Education"
 import Experience from "./sections/Experience"
 import Project from "./sections/Project"
+import Sidebar from "./Sidebar"
 
-import {useRef, useState} from "react"
+import {useRef} from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import {useGSAP} from "@gsap/react";
@@ -12,13 +13,12 @@ import {useGSAP} from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const Main = () => {
-    const [currentTitle, setCurrentTitle] = useState("")
     const mainRef = useRef(null);
 
     useGSAP(() => {
         const sections = mainRef.current.querySelectorAll(".parallax-section");
 
-        sections.forEach((section, i) => {
+        sections.forEach((section) => {
             gsap.fromTo(
                 section,
                 { y: 100, opacity: 0 },
@@ -39,14 +39,15 @@ const Main = () => {
     }, []);
 
     return (
-        <section ref={mainRef} >
-            <div><About title={currentTitle} setTitle={setCurrentTitle}/></div>
-            {/*<div><Skill setTitle={setCurrentTitle} /></div>*/}
-            <div><Project setTitle={setCurrentTitle} /></div>
-            <div><Experience className="parallax-section" setTitle={setCurrentTitle} /></div>
-            <div><Education setTitle={setCurrentTitle} /></div>
-            {/*<div className="parallax-section"><Contact setTitle={setCurrentTitle} /></div>*/}
-        </section>
+        <>
+            <Sidebar />
+            <section ref={mainRef} className="main">
+                <div><About /></div>
+                <div><Project /></div>
+                <div><Experience /></div>
+                <div><Education /></div>
+            </section>
+        </>
     )
 }
 

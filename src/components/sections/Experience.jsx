@@ -11,11 +11,13 @@ const Experience = ({ setTitle }) => {
     const experienceRef = useRef(null);
 
     useGSAP(() => {
-        ScrollTrigger.create({
-            trigger: experienceRef.current,
-            start: "top top",
-            onToggle: (toggle) => setTitle(toggle ? "Experience" : ""),
-        });
+        if (setTitle) {
+            ScrollTrigger.create({
+                trigger: experienceRef.current,
+                start: "top top",
+                onToggle: (toggle) => setTitle(toggle ? "Experience" : ""),
+            });
+        }
 
         const rows = gsap.utils.toArray(".exp-row");
         const splits = [];
@@ -52,6 +54,8 @@ const Experience = ({ setTitle }) => {
             const bullets = row.querySelectorAll(".exp-bullet");
             const tags = row.querySelectorAll(".exp-tag");
             const duration = row.querySelector(".exp-duration");
+
+            if (!titleEl || !subtitleEl) return;
 
             const titleSplit = new SplitText(titleEl, { type: "chars", charsClass: "exp-char" });
             const subtitleSplit = new SplitText(subtitleEl, { type: "lines", linesClass: "exp-line" });
@@ -105,13 +109,15 @@ const Experience = ({ setTitle }) => {
             id="experience"
             className="exp-wrapper text-white py-16 px-4 sm:px-8 md:px-12 lg:px-20"
         >
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,300px)_1fr] gap-12 lg:gap-16">
-                <aside className="lg:sticky lg:top-24 h-fit flex flex-col gap-10 order-1">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,280px)_1fr] gap-10 lg:gap-16">
+
+                {/* Sidebar: heading + counter + nav dots */}
+                <aside className="lg:sticky lg:top-24 h-fit flex flex-col gap-8 order-1">
                     <header className="text-center sm:text-left">
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+                        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
                             Experience
                         </h1>
-                        <p className="cbr mt-2 text-sm sm:text-base max-w-xs mx-auto sm:mx-0">
+                        <p className="cbr mt-2 text-sm sm:text-base max-w-xs mx-auto sm:mx-0 leading-relaxed">
                             A journey through my professional roles and achievements.
                         </p>
                     </header>
@@ -125,17 +131,19 @@ const Experience = ({ setTitle }) => {
                         </span>
                     </div>
 
+                    {/* Desktop nav markers */}
                     <div className="hidden lg:flex items-stretch gap-4">
                         <div className="relative w-px bg-white/15 self-stretch">
                             <div className="exp-progress-fill absolute top-0 left-0 w-full h-full bg-[#ECE9E1] origin-top scale-y-0" />
                         </div>
-                        <ul className="flex flex-col gap-8">
+                        <ul className="flex flex-col gap-8" style={{ padding: 0, margin: 0 }}>
                             {experience?.map((data, id) => (
-                                <li key={id}>
+                                <li key={id} style={{ listStyle: 'none' }}>
                                     <button
                                         type="button"
                                         onClick={() => scrollToRow(id)}
-                                        className="exp-marker text-left opacity-35 transition-opacity"
+                                        className="exp-marker text-left opacity-35 transition-opacity cursor-pointer hover:opacity-60"
+                                        style={{ background: 'none', border: 'none', padding: 0 }}
                                     >
                                         <span className="block text-xs uppercase tracking-widest cbr">
                                             {String(id + 1).padStart(2, "0")}
@@ -148,26 +156,44 @@ const Experience = ({ setTitle }) => {
                     </div>
                 </aside>
 
-                <div className="flex flex-col gap-24 sm:gap-32 order-2">
+                {/* Experience Cards */}
+                <div className="flex flex-col gap-16 sm:gap-24 order-2">
                     {experience?.map((data, id) => (
                         <div key={id} className="exp-row">
-                            <article className="exp-card  rounded-2xl p-6 sm:p-8 md:p-10 lg:p-10">
-                                <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between">
-                                    <b className="exp-title overflow-hidden">
-                                        <span className="inline-block">{data.title}</span>
-                                    </b>
-                                    <span className="exp-duration text-sm sm:text-base cbr mt-1 sm:mt-0">
+                            <article className="exp-card rounded-2xl p-5 sm:p-8 md:p-10">
+                                {/* Title + Duration */}
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2">
+                                    <h2 className="text-base sm:text-xl md:text-2xl font-semibold text-white overflow-hidden">
+                                        <span className="exp-title-text inline-block">{data.title}</span>
+                                    </h2>
+                                    <span className="exp-duration text-xs sm:text-sm cbr opacity-75 sm:mt-0 mt-0.5 flex-shrink-0">
                                         {data.duration}
                                     </span>
-                                </h1>
+                                </div>
 
-                                <h3 className="exp-subtitle block cbr font-medium mt-2 text-3xl sm:text-base overflow-hidden">
+                                {/* Subtitle / Role */}
+                                <h3 className="exp-subtitle cbr font-medium mt-1 text-sm sm:text-base md:text-lg overflow-hidden leading-snug">
                                     {data.subtitle}
                                 </h3>
 
-                                <p className="mt-4 space-y-2 text-xl sm:text-base cbr leading-relaxed">
+                                {/* Details */}
+                                <p className="mt-4 cbr leading-relaxed text-sm sm:text-base">
                                     {data.details}
                                 </p>
+
+                                {/* Tags */}
+                                {data.tags && data.tags.length > 0 && (
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {data.tags.map((tag, i) => (
+                                            <span
+                                                key={i}
+                                                className="exp-tag px-2.5 py-1 text-xs font-mono rounded-md bg-white/10 text-[#ECE9E1]/75"
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </article>
                         </div>
                     ))}

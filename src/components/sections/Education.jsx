@@ -3,7 +3,7 @@ import { education } from "../../assets/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Icon } from "@iconify/react";
+
 import SplitText from "gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -15,6 +15,8 @@ const Education = ({ setTitle }) => {
     const titleRef = useRef(null);
 
     useGSAP(() => {
+        if (!titleRef.current) return;
+
         const headingSplit = new SplitText(titleRef.current, { type: "chars" });
         gsap.from(headingSplit.chars, {
             y: 40,
@@ -28,12 +30,14 @@ const Education = ({ setTitle }) => {
             },
         });
 
-        ScrollTrigger.create({
-            trigger: educationRef.current,
-            start: "top 20%",
-            end: "bottom 80%",
-            onToggle: (toggle) => setTitle(toggle ? "Education" : ""),
-        });
+        if (setTitle) {
+            ScrollTrigger.create({
+                trigger: educationRef.current,
+                start: "top 20%",
+                end: "bottom 80%",
+                onToggle: (toggle) => setTitle(toggle ? "Education" : ""),
+            });
+        }
 
         const rowSplits = [];
         const rows = gsap.utils.toArray(".edu-row");
@@ -41,6 +45,7 @@ const Education = ({ setTitle }) => {
         const setActiveRow = (index) => {
             rows.forEach((row, i) => {
                 const marker = row.querySelector(".edu-marker");
+                if (!marker) return;
                 gsap.to(marker, {
                     backgroundColor: i === index ? "#e4e4e7" : "#27272a",
                     scale: i === index ? 1.5 : 1,
@@ -70,14 +75,16 @@ const Education = ({ setTitle }) => {
             const duration = row.querySelector(".edu-duration");
             const marker = row.querySelector(".edu-marker");
 
+            if (!titleEl) return;
+
             const titleSplit = new SplitText(titleEl, { type: "chars", charsClass: "edu-char" });
             rowSplits.push(titleSplit);
 
             gsap.set(titleSplit.chars, { yPercent: 110, opacity: 0 });
-            gsap.set([subtitle, duration], { opacity: 0, y: 10 });
+            gsap.set([subtitle, duration].filter(Boolean), { opacity: 0, y: 10 });
             gsap.set(bullets, { opacity: 0, x: -14 });
             gsap.set(tags, { opacity: 0, y: 8 });
-            gsap.set(marker, { scale: 0 });
+            if (marker) gsap.set(marker, { scale: 0 });
 
             const revealTl = gsap.timeline({
                 scrollTrigger: {
@@ -126,28 +133,33 @@ const Education = ({ setTitle }) => {
     return (
         <section
             ref={educationRef}
-            className="relative min-h-screen cbr w-full bg-[#0E1016] text-[#ECE9E1] text-zinc-100 py-15 px-6 md:px-16 lg:px-24 overflow-hidden select-none"
+            className="relative min-h-screen cbr w-full bg-[#0E1016] text-[#ECE9E1] py-16 px-4 sm:px-8 md:px-16 lg:px-24 overflow-hidden select-none"
             id="education"
         >
+            {/* Grid overlay */}
             <div
-                className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#ECE9E1_1px,transparent_1px),linear-gradient(90deg,#ECE9E1_1px,transparent_1px)] [background-size:64px_64px]"
+                className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(#ECE9E1_1px,transparent_1px),linear-gradient(90deg,#ECE9E1_1px,transparent_1px)] [background-size:64px_64px]"
             />
-            <div className="text-left mb-10 lg:mb-16 border-b border-zinc-900 pb-2 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+
+            {/* Section Heading */}
+            <div className="text-left mb-10 lg:mb-16 border-b border-zinc-900 pb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <div>
-                    <h1 ref={titleRef} className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight">
+                    <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight">
                         Academic <span className="text-zinc-500 font-serif">Credentials.</span>
                     </h1>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            {/* Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
+                {/* Education Timeline */}
                 <div className="education-column lg:col-span-7 space-y-5">
                     <div className="flex items-center gap-3 border-b border-zinc-900 pb-4">
-                        <h2 className="text-xl font-medium text-zinc-200 tracking-tight">Institutional Path</h2>
+                        <h2 className="text-lg sm:text-xl font-medium text-zinc-200 tracking-tight">Institutional Path</h2>
                     </div>
 
-                    <div className="edu-timeline relative space-y-14 pl-6 md:pl-8">
+                    <div className="edu-timeline relative space-y-12 sm:space-y-14 pl-5 sm:pl-8">
                         <div className="absolute left-0 top-2 bottom-2 w-px bg-zinc-900 overflow-hidden">
                             <div
                                 className="edu-line-fill absolute top-0 left-0 w-full h-full bg-zinc-400 origin-top"
@@ -156,49 +168,56 @@ const Education = ({ setTitle }) => {
                         </div>
 
                         {education?.map((data, id) => (
-                            <article key={id} className="edu-row group relative space-y-3">
-                                <div className="edu-marker absolute -left-[29px] md:-left-[37px] top-2 w-2 h-2 rounded-full bg-zinc-800 border border-black" />
+                            <article key={id} className="edu-row group relative space-y-2 sm:space-y-3">
+                                <div className="edu-marker absolute -left-[22px] sm:-left-[37px] top-2 w-2 h-2 rounded-full bg-zinc-800 border border-black" />
 
                                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                                    <p className="text-2xl font-medium text-zinc-100 group-hover:text-white transition-colors duration-300 overflow-hidden">
+                                    <p className="text-base sm:text-xl md:text-2xl font-medium text-zinc-100 group-hover:text-white transition-colors duration-300 overflow-hidden">
                                         <span className="edu-title-text inline-block">{data.title}</span>
                                     </p>
-                                    <span className="edu-duration text-md font-mono text-zinc-500">
+                                    <span className="edu-duration text-xs sm:text-sm font-mono text-zinc-500 flex-shrink-0">
                                         {data.duration}
                                     </span>
                                 </div>
 
-                                <p className="edu-subtitle text-lg text-zinc-400 italic font-serif">{data.subtitle}</p>
+                                <p className="edu-subtitle text-sm sm:text-base md:text-lg text-zinc-400 italic font-serif">{data.subtitle}</p>
 
-                                <div className="mt-4 flex flex-wrap gap-1.5 pt-2">
-                                    {data.tags?.map((skill, i) => (
-                                        <span
-                                            key={i}
-                                            className="edu-tag px-2.5 py-1 text-md font-mono rounded-lg bg-zinc-950 text-zinc-400"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
+                                {data.tags && data.tags.length > 0 && (
+                                    <div className="mt-3 flex flex-wrap gap-1.5 pt-2">
+                                        {data.tags?.map((skill, i) => (
+                                            <span
+                                                key={i}
+                                                className="edu-tag px-2 py-0.5 text-xs font-mono rounded-lg bg-zinc-950 text-zinc-400"
+                                            >
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </article>
                         ))}
                     </div>
                 </div>
 
-                <div className="certificate-column lg:col-span-5 lg:sticky lg:top-24 h-fit space-y-12">
+                {/* Certifications */}
+                <div className="certificate-column lg:col-span-5 lg:sticky lg:top-24 h-fit space-y-8 sm:space-y-12">
                     <div className="flex items-center gap-3 border-b border-zinc-900 pb-2">
-                        <h2 className="text-xl font-medium text-zinc-200 tracking-tight">Specializations</h2>
+                        <h2 className="text-lg sm:text-xl font-medium text-zinc-200 tracking-tight">Specializations</h2>
                     </div>
 
                     <div className="divide-y divide-zinc-900 border-b border-zinc-900">
                         {
                             certificates?.map((certificate, id) => (
                                 <div key={id} className="cert-row group/cert py-4 flex items-center justify-between transition-colors duration-300">
-                                    <div className="flex items-center gap-4 cursor-pointer">
-                                        <span>{id+1}.</span>
-                                        <span className="text-lg font-medium text-zinc-300 group-hover/cert:text-white transition-colors duration-300">{certificate}</span>
+                                    <div className="flex items-center gap-3 sm:gap-4 cursor-pointer">
+                                        <span className="text-zinc-600 text-sm font-mono">{id + 1}.</span>
+                                        <span className="text-sm sm:text-base font-medium text-zinc-300 group-hover/cert:text-white transition-colors duration-300">
+                                            {certificate}
+                                        </span>
                                     </div>
-                                    <span className="text-[10px] font-mono text-zinc-600 tracking-wider uppercase opacity-0 group-hover/cert:opacity-100 transition-all duration-300 translate-x-2 group-hover/cert:translate-x-0">Verified</span>
+                                    <span className="text-[10px] font-mono text-zinc-600 tracking-wider uppercase opacity-0 group-hover/cert:opacity-100 transition-all duration-300 translate-x-2 group-hover/cert:translate-x-0 flex-shrink-0 ml-2">
+                                        Verified
+                                    </span>
                                 </div>
                             ))
                         }

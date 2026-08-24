@@ -11,25 +11,23 @@ const header = ['PROJECTS', 'EXPERIENCE', 'EDUCATION']
 
 const all_skills = {
     languages: 'Languages',
-    ai: 'AI/ML & Agentic Systems',
-    frameworks: 'Frameworks & Libraries',
+    ai: 'AI/ML & Agentic',
+    frameworks: 'Frameworks',
     tools: 'Tools & Platforms'
 }
 
 const skill_list = {
     languages: ['Java', 'JavaScript', 'Python', 'SQL', 'NoSQL', 'C/C++'],
-    ai: ['LLMs (GPT, Claude)', 'LangChain', 'RAG (Retrieval-Augmented Generation)', 'Vector Databases (Qdrant, FAISS, Chroma)',
-        'Embeddings', 'Prompt Engineering', 'Fine-tuning', 'Multi-Agent Orchestration', 'NLP',
-    'Time Series Analysis'],
+    ai: ['LLMs (GPT, Claude)', 'LangChain', 'RAG', 'Vector Databases', 'Embeddings', 'Prompt Engineering', 'Fine-tuning', 'Multi-Agent Orchestration', 'NLP', 'Time Series Analysis'],
     frameworks: ['Spring Boot', 'React.js', 'Node.js', 'FastAPI', 'TensorFlow', 'Transformers', 'NumPy', 'Pandas'],
     tools: ['Git', 'Linux', 'Azure', 'AWS', 'GCP', 'REST APIs', 'Gradle', 'JWT', 'Docker']
 }
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger)
 
-const About = ({ title, setTitle }) => {
+const About = ({ setTitle }) => {
     const [currentSkill, setCurrentSkill] = useState("languages")
-    const [activeIndex, setActiveIndex] = useState(0)
+    const [, setActiveIndex] = useState(0)
     const aboutRef = useRef(null)
     const particleContainerRef = useRef(null)
     const skillKeys = Object.keys(all_skills)
@@ -42,7 +40,7 @@ const About = ({ title, setTitle }) => {
                 setCurrentSkill(nextKey)
                 return nextIndex
             })
-        }, 15000) // 15 seconds
+        }, 15000)
 
         return () => clearInterval(interval)
     }, [skillKeys])
@@ -53,7 +51,7 @@ const About = ({ title, setTitle }) => {
 
     const particlesOptions = {
         background: { color: { value: "transparent" } },
-        fpsLimit: 120,
+        fpsLimit: 60,
         interactivity: {
             events: {
                 onHover: { enable: true, mode: "repulse" },
@@ -78,7 +76,7 @@ const About = ({ title, setTitle }) => {
             },
             number: {
                 density: { enable: true, area: 800 },
-                value: 40,
+                value: 30,
             },
             opacity: { value: 0.3 },
             shape: { type: "circle" },
@@ -87,12 +85,13 @@ const About = ({ title, setTitle }) => {
     };
 
     useGSAP(() => {
-
-        ScrollTrigger.create({
-            trigger: aboutRef.current,
-            start: "top top",
-            onToggle: (toggle) => setTitle(toggle ? "About" : ""),
-        })
+        if (setTitle) {
+            ScrollTrigger.create({
+                trigger: aboutRef.current,
+                start: "top top",
+                onToggle: (toggle) => setTitle(toggle ? "About" : ""),
+            })
+        }
 
         const title = SplitText.create(".mano", {
             type: "words, chars, lines",
@@ -112,7 +111,6 @@ const About = ({ title, setTitle }) => {
             stagger: 0.1,
         })
 
-
         gsap.from(desc.lines, {
             filter: "blur(10px)",
             y: "-50",
@@ -130,8 +128,6 @@ const About = ({ title, setTitle }) => {
             duration: 1,
         })
 
-
-
     }, [])
 
     const display_skill = useMemo(() => {
@@ -140,7 +136,6 @@ const About = ({ title, setTitle }) => {
     }, [currentSkill])
 
     const handleSkillChange = (skillKey) => {
-        console.log('clicked')
         setCurrentSkill(skillKey)
         setActiveIndex(skillKeys.indexOf(skillKey))
 
@@ -150,9 +145,9 @@ const About = ({ title, setTitle }) => {
         )
     }
 
-
     return (
-        <div ref={aboutRef} className="relative bg-green min-h-screen flex flex-col justify-center items-center">
+        <div ref={aboutRef} id="about" className="relative bg-green min-h-screen flex flex-col justify-center items-center overflow-hidden">
+            {/* Particle Background */}
             <div ref={particleContainerRef} className="absolute inset-0">
                 <Particles
                     id="tsparticles"
@@ -160,22 +155,26 @@ const About = ({ title, setTitle }) => {
                     options={particlesOptions}
                 />
             </div>
-            <header className="topbar fixed top-3 left-5 z-100">
+
+            {/* Left Topbar — Nav links (hidden on mobile, mobile nav handles it) */}
+            <header className="topbar fixed top-3 left-5 z-[100] hidden md:block">
                 <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
                     <button onClick={() => (window.location.href = "/")} className='bg-black py-2 px-[12px] text-white text-md md:text-xl rounded-lg cursor-pointer'>m</button>
-                    <div className="flex item-center justify-center gap-1 text-md">
+                    <div className="flex items-center justify-center gap-1 text-sm md:text-md">
                         {
                             header.map((item, idx) => (
-                                <a href={`#${item.toLowerCase()}`} className={`text-center p-1`} key={idx}>{item}</a>
+                                <a href={`#${item.toLowerCase()}`} className={`text-center p-1 px-2`} key={idx}>{item}</a>
                             ))
                         }
                     </div>
                 </div>
             </header>
-            <header className="topbar fixed top-3 right-5 z-100">
-                <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg">
-                    <div className="flex item-center justify-center gap-1 text-md">
-                        <div className="flex justify-center space-x-8">
+
+            {/* Right Topbar — Social icons (always visible, positioned to avoid mobile nav) */}
+            <header className="topbar fixed bottom-3 right-5 z-[100]" style={{ bottom: 'calc(56px + 0.75rem)' }}>
+                <div className="flex justify-center items-center p-2 gap-1 bg-white text-black rounded-lg shadow-lg md:mt-0" style={{ marginBottom: '500px' }}>
+                    <div className="flex items-center justify-center gap-1">
+                        <div className="flex justify-center space-x-3 md:space-x-4">
                             {[
                                 { icon: "mdi:email", href: "mailto:manodeepan2001@gmail.com", color: "hover:text-blue-700" },
                                 { icon: "mdi:linkedin", href: "https://www.linkedin.com/in/mano-deepan-b-392361208", color: "hover:text-blue-700" },
@@ -188,52 +187,55 @@ const About = ({ title, setTitle }) => {
                                     rel="noopener noreferrer"
                                     className={`transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${social.color}`}
                                 >
-                                    <Icon icon={social.icon} height={40} width={40} />
+                                    <Icon icon={social.icon} height={28} width={28} className="md:hidden" />
+                                    <Icon icon={social.icon} height={36} width={36} className="hidden md:block" />
                                 </a>
                             ))}
                         </div>
                     </div>
                 </div>
             </header>
-            <div className="w-full flex justify-between px-4 sm:px-6 md:px-10 py-6 z-100">
-                <div className="w-2/3 text-left sm:text-left text-sm md:text-lg lg:text-xl leading-relaxed">
-                    <span className="block text-3xl sm:text-5xl md:text-[82px] font-bold mano mb-4">
+
+            {/* Main Content */}
+            <div className="w-full flex flex-col md:flex-row md:justify-between px-4 sm:px-6 md:px-10 py-6 z-[10] mt-16 md:mt-0">
+                {/* Left: Name + Description + Skill Tabs */}
+                <div className="w-full md:w-[55%] text-left text-sm md:text-lg lg:text-xl leading-relaxed">
+                    <span className="block text-4xl sm:text-5xl md:text-[72px] lg:text-[82px] font-bold mano mb-4 leading-none">
                         MANO DEEPAN
                     </span>
 
-                    <p className="mano-about mb-3">
-                        Hello! I am Software Engineer with 2 years of experience in full-stack development and a growing focus on AI/ML
-                        engineering.
+                    <p className="mano-about mb-3 text-sm sm:text-base md:text-lg">
+                        Hello! I am a Software Engineer with 2 years of experience in full-stack development and a growing focus on AI/ML engineering.
                     </p>
 
-                    <p className="mano-about mb-3">
-                        Skilled in Python, Java, JavaScript, and modern frameworks, with hands-on projects in machine
-                        learning, time series analysis, and API-driven systems.
+                    <p className="mano-about mb-3 text-sm sm:text-base md:text-lg">
+                        Skilled in Python, Java, JavaScript, and modern frameworks, with hands-on projects in machine learning, time series analysis, and API-driven systems.
                     </p>
 
-                    <p className="mano-about">
-                        Seeking a Software Engineer role to contribute to
-                        scalable solutions and AI-driven applications.
+                    <p className="mano-about text-sm sm:text-base md:text-lg">
+                        Seeking a Software Engineer role to contribute to scalable solutions and AI-driven applications.
                     </p>
 
-                    <div className="mt-20">
-                        <ul className="skill-list flex gap-2 text-xl">
+                    {/* Skill Category Tabs */}
+                    <div className="mt-8 md:mt-16">
+                        <ul className="skill-list flex flex-wrap gap-2 text-xs sm:text-sm md:text-base" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                             {
                                 Object.entries(all_skills).map(([key, label]) => {
                                     const isActive = key === currentSkill
                                     return (
                                         <li
                                             key={key}
-                                            className={`skill-tab cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 ${
+                                            className={`skill-tab cursor-pointer px-3 py-1.5 rounded-lg transition-all duration-300 ${
                                                 isActive
                                                     ? 'bg-white text-black border-2 border-white shadow-lg'
                                                     : 'text-white border-2 border-white/30 hover:border-white/70'
                                             }`}
                                             onClick={() => handleSkillChange(key)}
+                                            style={{ listStyle: 'none' }}
                                         >
                                             {label}
                                             {isActive && (
-                                                <span className="ml-2 inline-block w-2 h-2 bg-[#595959] rounded-full animate-pulse"></span>
+                                                <span className="ml-1.5 inline-block w-1.5 h-1.5 bg-[#595959] rounded-full animate-pulse" style={{ margin: '0 0 0 6px' }}></span>
                                             )}
                                         </li>
                                     )
@@ -242,14 +244,16 @@ const About = ({ title, setTitle }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-full md:w-2/5 flex flex-col justify-between">
-                    <div className="flex flex-wrap gap-3">
+
+                {/* Right: Skill Items + Resume */}
+                <div className="w-full md:w-[40%] flex flex-col justify-between mt-8 md:mt-0 gap-6">
+                    <div className="flex flex-wrap gap-2 md:gap-3">
                         {
                             display_skill.map((skill, key) => {
                                 return (
                                     <div
                                         key={key}
-                                        className="skill-item bg-white/20 px-4 py-2 rounded-lg text-white text-sm md:text-base hover:bg-white/30 transition-all duration-300"
+                                        className="skill-item bg-white/20 px-3 py-1.5 rounded-lg text-white text-xs sm:text-sm md:text-base hover:bg-white/30 transition-all duration-300"
                                     >
                                         {skill}
                                     </div>
@@ -257,9 +261,13 @@ const About = ({ title, setTitle }) => {
                             })
                         }
                     </div>
-                    <a  href="https://drive.google.com/file/d/1HPKjFdKSsdb8m8rCMBVXPifgRcg3OauV/view?usp=drive_link" target="_blank"
-                        rel="noreferrer" className="w-full bg-white flex align-center justify-center mb-2 rounded-md">
-                        <span className="text-black py-3">Resume</span>
+                    <a
+                        href="https://drive.google.com/file/d/1HPKjFdKSsdb8m8rCMBVXPifgRcg3OauV/view?usp=drive_link"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full bg-white flex items-center justify-center mb-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                    >
+                        <span className="text-black py-3 text-sm font-medium tracking-wide">View Resume ↗</span>
                     </a>
                 </div>
             </div>

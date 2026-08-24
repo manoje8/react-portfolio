@@ -1,6 +1,5 @@
 import './App.css';
 import Main from './components/Main';
-import Sidebar from './components/Sidebar';
 import {ReactLenis} from "lenis/react";
 import {useEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
@@ -24,6 +23,5 @@ function App() {
         </ReactLenis>
     );
 }
-
 
 export default App;
