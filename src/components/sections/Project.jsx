@@ -20,6 +20,9 @@ const Project = ({ setTitle }) => {
   const descRef = useRef();
   const linkRef = useRef();
 
+  const activateRef = useRef(null);
+  const isClickScrollingRef = useRef(false);
+
   useGSAP(
     () => {
       ScrollTrigger.create({
@@ -84,14 +87,16 @@ const Project = ({ setTitle }) => {
           );
       };
 
+      activateRef.current = activate;
+
       rowRefs.current.forEach((row, i) => {
         if (!row) return;
         ScrollTrigger.create({
           trigger: row,
           start: "top 55%",
           end: "bottom 45%",
-          onEnter: () => activate(i),
-          onEnterBack: () => activate(i),
+          onEnter: () => !isClickScrollingRef.current && activate(i),
+          onEnterBack: () => !isClickScrollingRef.current && activate(i),
         });
       });
     },
@@ -99,7 +104,12 @@ const Project = ({ setTitle }) => {
   );
 
   const handleRowClick = (i) => {
+    activateRef.current?.(i);
+    isClickScrollingRef.current = true;
     rowRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 600);
   };
 
   return (
